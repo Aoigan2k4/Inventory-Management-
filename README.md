@@ -1,4 +1,4 @@
-Project Name: Inventory Management Application
+Inventory Management Application
 Members: Tran Ba Minh Huy, Changru Jia
 
 
