@@ -16,7 +16,7 @@
             android:name=".Dashboard"
             android:exported="false" />
         <activity
-            android:name=".EmailPasswordActivity"
+            android:name=".LogIn"
             android:exported="false" />
         <activity
             android:name=".SignUp"

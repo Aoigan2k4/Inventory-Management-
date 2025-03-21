@@ -22,18 +22,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.concurrent.atomic.AtomicReference;
-
-public class EmailPasswordActivity extends AppCompatActivity {
+public class LogIn extends AppCompatActivity {
 
     EditText emailTxt, passTxt;
     Button loginBtn;
     TextView signUp;
     FirebaseAuth mAuth;
+    FirebaseManager mng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,41 +48,43 @@ public class EmailPasswordActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String email = emailTxt.getText().toString().trim();
                 String password = passTxt.getText().toString().trim();
-                mAuth = FirebaseAuth.getInstance();
+                mng = FirebaseManager.getInstance();
+
+                mAuth = mng.getAuth();
                 
                 if (!email.isEmpty() && !password.isEmpty()) {
                     mAuth.signInWithEmailAndPassword(email, password)
-                            .addOnCompleteListener(EmailPasswordActivity.this, new OnCompleteListener<AuthResult>() {
+                            .addOnCompleteListener(LogIn.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
                                         FirebaseUser loggedInUser = mAuth.getCurrentUser();
-                                        Intent intent = new Intent(EmailPasswordActivity.this, Dashboard.class);
+                                        Intent intent = new Intent(LogIn.this, Dashboard.class);
                                         startActivity(intent);
                                         finish();
                                     } else {
                                         Exception exception = task.getException();
                                         Log.w(TAG, "signInWithEmail:failure", exception);
                                         if (exception instanceof FirebaseAuthInvalidCredentialsException) {
-                                            Toast.makeText(EmailPasswordActivity.this, "Invalid email or password.", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(LogIn.this, "Invalid email or password.", Toast.LENGTH_SHORT).show();
                                         } else if (exception instanceof FirebaseAuthInvalidUserException) {
-                                            Toast.makeText(EmailPasswordActivity.this, "User not found.", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(LogIn.this, "User not found.", Toast.LENGTH_SHORT).show();
                                         } else {
-                                            Toast.makeText(EmailPasswordActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(LogIn.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 }
                             });
                 }
                 else {
-                    Toast.makeText(EmailPasswordActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LogIn.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
     private void SignUp(){
-        Intent intent = new Intent(EmailPasswordActivity.this, SignUp.class);
+        Intent intent = new Intent(LogIn.this, SignUp.class);
         startActivity(intent);
         finish();
     }

@@ -27,6 +27,7 @@ public class SignUp extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseFirestore db;
     User newUser;
+    FirebaseManager mng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +47,9 @@ public class SignUp extends AppCompatActivity {
         String username = usernameTxt.getText().toString().trim();
         String email = emailTxt.getText().toString().trim();
         String password = passTxt.getText().toString().trim();
-        db = FirebaseFirestore.getInstance();
-        mAuth = FirebaseAuth.getInstance();
+        mng = FirebaseManager.getInstance();
+        db = mng.getDb();
+        mAuth = mng.getAuth();
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -79,7 +81,7 @@ public class SignUp extends AppCompatActivity {
     }
 
     private void LogInLink(){
-        Intent intent = new Intent(SignUp.this, EmailPasswordActivity.class);
+        Intent intent = new Intent(SignUp.this, LogIn.class);
         startActivity(intent);
         finish();
     }
