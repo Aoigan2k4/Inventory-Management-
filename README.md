@@ -32,5 +32,3 @@ The Inventory Management System is a web-based application designed to help busi
 💪 Backend: Java
 💾 Database: Firebase Firestore
 🔑 Authentication: Firebase Authentication
-
-
