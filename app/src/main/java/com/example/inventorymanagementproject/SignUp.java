@@ -59,7 +59,7 @@ public class SignUp extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             if(user != null) {
                                 String uid = user.getUid();
-                                newUser = new User(uid, email, username);
+                                newUser = new User(uid, username, email);
                                 db.collection("Users").document(newUser.getId()).set(newUser)
                                         .addOnSuccessListener(a -> {
                                             Toast.makeText(SignUp.this, "User created!", Toast.LENGTH_SHORT).show();
