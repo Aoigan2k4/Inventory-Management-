@@ -1,0 +1,113 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class SignUp {
+    - FirebaseAuth mAuth
+    - FirebaseFirestore db
+    - User newUser
+    - FirebaseManager mng
+    + onCreate(Bundle savedInstanceState)
+    - SignUpBtn()
+    - LogInLink()
+}
+
+class LogIn {
+    - FirebaseAuth mAuth
+    - FirebaseManager mng
+    + onCreate(Bundle savedInstanceState)
+    - SignUp()
+}
+
+class FirebaseManager {
+    - static FirebaseManager instance
+    - final FirebaseAuth mAuth
+    - final FirebaseFirestore db
+    - FirebaseManager()
+    + static synchronized getInstance()
+    + getAuth()
+    + getDb()
+}
+
+class User {
+    - final String id
+    - String username
+    - String email
+    + User(String id, String name, String email)
+    + getEmail()
+    + setEmail(String email)
+    + getId()
+    + getUsername()
+    + setUsername(String username)
+}
+
+abstract class AbstractItem {
+    + buildClothing() : IBuilder
+    + buildElectronic() : IBuilder
+    + buildFurniture() : IBuilder
+}
+
+class ClothingFactory extends AbstractItem
+class ElectronicFactory extends AbstractItem
+class FurnitureFactory extends AbstractItem
+
+enum Type {
+    electronic
+    clothing
+    furniture
+}
+
+interface IBuilder {
+    + SetID(String id)
+    + SetName(String name)
+    + SetBrand(String brand)
+    + SetPrice(String price)
+    + SetDesc(String desc)
+    + SetQuantity(String quantity)
+}
+
+class ClothingBuilder implements IBuilder
+class ElectronicBuilder implements IBuilder
+class FurnitureBuilder implements IBuilder
+
+class Engineer {
+    - IBuilder iBuilder
+    + Engineer(IBuilder iBuilder)
+    + BuildItem(Items item)
+}
+
+class Items {
+    - String id
+    - String name
+    - String brand
+    - String price
+    - String desc
+    - String quantity
+    + getId()
+    + setId(String id)
+    + getName()
+    + setName(String name)
+    + getBrand()
+    + setBrand(String brand)
+    + getPrice()
+    + setPrice(String price)
+    + getDesc()
+    + setDesc(String desc)
+    + getQuantity()
+    + setQuantity(String quantity)
+}
+
+SignUp --> FirebaseManager
+SignUp --> User
+LogIn --> FirebaseManager
+FirebaseManager --> FirebaseAuth
+FirebaseManager --> FirebaseFirestore
+AbstractItem <|-- ClothingFactory
+AbstractItem <|-- ElectronicFactory
+AbstractItem <|-- FurnitureFactory
+IBuilder <|-- ClothingBuilder
+IBuilder <|-- ElectronicBuilder
+IBuilder <|-- FurnitureBuilder
+Engineer --> IBuilder
+Engineer --> Items
+
+@enduml
