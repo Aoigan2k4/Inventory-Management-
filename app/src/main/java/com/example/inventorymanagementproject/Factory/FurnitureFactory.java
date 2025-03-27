@@ -2,7 +2,7 @@ package com.example.inventorymanagementproject.Factory;
 import com.example.inventorymanagementproject.Builder.FurnitureBuilder;
 import com.example.inventorymanagementproject.Builder.IBuilder;
 
-public class FurnitureFactory extends AbstractItem{
+public class FurnitureFactory extends AbstractFactory{
     @Override
     public IBuilder buildClothing() {
         return null;

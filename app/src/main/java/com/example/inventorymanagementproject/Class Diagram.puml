@@ -40,15 +40,15 @@ class User {
     + setUsername(String username)
 }
 
-abstract class AbstractItem {
+abstract class AbstractFactory {
     + buildClothing() : IBuilder
     + buildElectronic() : IBuilder
     + buildFurniture() : IBuilder
 }
 
-class ClothingFactory extends AbstractItem
-class ElectronicFactory extends AbstractItem
-class FurnitureFactory extends AbstractItem
+class ClothingFactory extends AbstractFactory
+class ElectronicFactory extends AbstractFactory
+class FurnitureFactory extends AbstractFactory
 
 enum Type {
     electronic
@@ -97,17 +97,21 @@ class Items {
 }
 
 SignUp --> FirebaseManager
-SignUp --> User
+SignUp *-- User
 LogIn --> FirebaseManager
-FirebaseManager --> FirebaseAuth
-FirebaseManager --> FirebaseFirestore
-AbstractItem <|-- ClothingFactory
-AbstractItem <|-- ElectronicFactory
-AbstractItem <|-- FurnitureFactory
-IBuilder <|-- ClothingBuilder
-IBuilder <|-- ElectronicBuilder
-IBuilder <|-- FurnitureBuilder
+FirebaseManager *-- FirebaseAuth
+FirebaseManager *-- FirebaseFirestore
+AbstractFactory <|-- ClothingFactory
+AbstractFactory <|-- ElectronicFactory
+AbstractFactory <|-- FurnitureFactory
+ClothingFactory --> ClothingBuilder
+ElectronicFactory --> ElectronicBuilder
+FurnitureFactory --> FurnitureBuilder
+IBuilder <|.. ClothingBuilder
+IBuilder <|.. ElectronicBuilder
+IBuilder <|.. FurnitureBuilder
 Engineer --> IBuilder
 Engineer --> Items
+
 
 @enduml

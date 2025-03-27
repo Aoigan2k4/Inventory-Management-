@@ -3,7 +3,7 @@ package com.example.inventorymanagementproject.Factory;
 import com.example.inventorymanagementproject.Builder.ElectronicBuilder;
 import com.example.inventorymanagementproject.Builder.IBuilder;
 
-public class ElectronicFactory extends AbstractItem {
+public class ElectronicFactory extends AbstractFactory {
 
     @Override
     public IBuilder buildClothing() {
