@@ -1,22 +1,5 @@
 @startuml
-'https://plantuml.com/class-diagram
-
-class SignUp {
-    - FirebaseAuth mAuth
-    - FirebaseFirestore db
-    - User newUser
-    - FirebaseManager mng
-    + onCreate(Bundle savedInstanceState)
-    - SignUpBtn()
-    - LogInLink()
-}
-
-class LogIn {
-    - FirebaseAuth mAuth
-    - FirebaseManager mng
-    + onCreate(Bundle savedInstanceState)
-    - SignUp()
-}
+'https://plantuml.com/class-diagram}
 
 class FirebaseManager {
     - static FirebaseManager instance
@@ -96,9 +79,6 @@ class Items {
     + setQuantity(String quantity)
 }
 
-SignUp --> FirebaseManager
-SignUp *-- User
-LogIn --> FirebaseManager
 FirebaseManager *-- FirebaseAuth
 FirebaseManager *-- FirebaseFirestore
 AbstractFactory <|-- ClothingFactory

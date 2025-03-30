@@ -1,9 +1,10 @@
-package com.example.inventorymanagementproject.Factory;
+package com.example.inventorymanagementproject.AbstractFactory;
 
 import com.example.inventorymanagementproject.Builder.ClothingBuilder;
 import com.example.inventorymanagementproject.Builder.IBuilder;
 
 public class ClothingFactory extends AbstractFactory {
+
 
     @Override
     public IBuilder buildClothing(){

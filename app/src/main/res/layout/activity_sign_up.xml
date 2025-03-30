@@ -43,26 +43,30 @@
         android:inputType=""
         android:layout_margin="15dp"/>
 
-<!--    <RadioGroup-->
-<!--        android:id="@+id/roleRadioGroup"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:orientation="horizontal"-->
-<!--        android:layout_marginBottom="24dp">-->
+    <RadioGroup
+        android:id="@+id/roleRadioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="24dp">
+        <RadioButton
+            android:id="@+id/adminRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Admin"/>
 
-<!--        <RadioButton-->
-<!--            android:id="@+id/clientRadioButton"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Client" />-->
+        <RadioButton
+            android:id="@+id/staffRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Staff"/>
 
-<!--        <RadioButton-->
-<!--            android:id="@+id/librarianRadioButton"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Admin"-->
-<!--            android:layout_marginStart="32dp"/>-->
-<!--    </RadioGroup>-->
+        <RadioButton
+            android:id="@+id/clientRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Client" />
+    </RadioGroup>
 
     <Button
         android:id="@+id/SignUpBtn"

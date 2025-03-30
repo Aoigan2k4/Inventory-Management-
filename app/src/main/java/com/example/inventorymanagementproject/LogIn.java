@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +28,8 @@ import com.google.firebase.auth.FirebaseUser;
 public class LogIn extends AppCompatActivity {
 
     EditText emailTxt, passTxt;
+    RadioGroup roles;
+    RadioButton admin, staff, client;
     Button loginBtn;
     TextView signUp;
     FirebaseAuth mAuth;
@@ -40,45 +44,43 @@ public class LogIn extends AppCompatActivity {
         passTxt = findViewById(R.id.passwordTxt);
         loginBtn = findViewById(R.id.loginButton);
         signUp = findViewById(R.id.signUpLink);
+        roles = findViewById(R.id.roleRadioGroup);
+        admin = findViewById(R.id.adminRadioButton);
+        staff = findViewById(R.id.staffRadioButton);
+        client = findViewById(R.id.clientRadioButton);
 
         signUp.setOnClickListener(v -> SignUp());
 
-        loginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String email = emailTxt.getText().toString().trim();
-                String password = passTxt.getText().toString().trim();
-                mng = FirebaseManager.getInstance();
+        loginBtn.setOnClickListener(view -> {
+            String email = emailTxt.getText().toString().trim();
+            String password = passTxt.getText().toString().trim();
+            mng = FirebaseManager.getInstance();
 
-                mAuth = mng.getAuth();
-                
-                if (!email.isEmpty() && !password.isEmpty()) {
-                    mAuth.signInWithEmailAndPassword(email, password)
-                            .addOnCompleteListener(LogIn.this, new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
-                                        FirebaseUser loggedInUser = mAuth.getCurrentUser();
-                                        Intent intent = new Intent(LogIn.this, Dashboard.class);
-                                        startActivity(intent);
-                                        finish();
-                                    } else {
-                                        Exception exception = task.getException();
-                                        Log.w(TAG, "signInWithEmail:failure", exception);
-                                        if (exception instanceof FirebaseAuthInvalidCredentialsException) {
-                                            Toast.makeText(LogIn.this, "Invalid email or password.", Toast.LENGTH_SHORT).show();
-                                        } else if (exception instanceof FirebaseAuthInvalidUserException) {
-                                            Toast.makeText(LogIn.this, "User not found.", Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            Toast.makeText(LogIn.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
+            mAuth = mng.getAuth();
+
+            if (!email.isEmpty() && !password.isEmpty()) {
+                mAuth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(LogIn.this, task -> {
+                            if (task.isSuccessful()) {
+                                FirebaseUser loggedInUser = mAuth.getCurrentUser();
+                                Intent intent = new Intent(LogIn.this, Dashboard.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Exception exception = task.getException();
+                                Log.w(TAG, "signInWithEmail:failure", exception);
+                                if (exception instanceof FirebaseAuthInvalidCredentialsException) {
+                                    Toast.makeText(LogIn.this, "Invalid email or password.", Toast.LENGTH_SHORT).show();
+                                } else if (exception instanceof FirebaseAuthInvalidUserException) {
+                                    Toast.makeText(LogIn.this, "User not found.", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(LogIn.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                                 }
-                            });
-                }
-                else {
-                    Toast.makeText(LogIn.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
-                }
+                            }
+                        });
+            }
+            else {
+                Toast.makeText(LogIn.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
             }
         });
     }

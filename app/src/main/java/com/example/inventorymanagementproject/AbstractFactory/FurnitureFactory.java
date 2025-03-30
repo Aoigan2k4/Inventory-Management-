@@ -1,10 +1,8 @@
-package com.example.inventorymanagementproject.Factory;
-
-import com.example.inventorymanagementproject.Builder.ElectronicBuilder;
+package com.example.inventorymanagementproject.AbstractFactory;
+import com.example.inventorymanagementproject.Builder.FurnitureBuilder;
 import com.example.inventorymanagementproject.Builder.IBuilder;
 
-public class ElectronicFactory extends AbstractFactory {
-
+public class FurnitureFactory extends AbstractFactory{
     @Override
     public IBuilder buildClothing() {
         return null;
@@ -12,11 +10,11 @@ public class ElectronicFactory extends AbstractFactory {
 
     @Override
     public IBuilder buildElectronic() {
-        return new ElectronicBuilder();
+        return null;
     }
 
     @Override
     public IBuilder buildFurniture() {
-        return null;
+        return new FurnitureBuilder();
     }
 }

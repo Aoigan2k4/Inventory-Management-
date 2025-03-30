@@ -1,11 +1,6 @@
-package com.example.inventorymanagementproject;
+package com.example.inventorymanagementproject.User;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.example.inventorymanagementproject.Builder.Items;
-
-public class User {
+public abstract class User {
     private final String id;
     private String username;
     private String email;
@@ -16,6 +11,18 @@ public class User {
         this.email = email;
     }
 
+    public final void viewItems() {
+        filterItems();
+        displayItems();
+    }
+
+    protected abstract void filterItems();
+
+
+    private void displayItems() {
+        System.out.println("Displaying products...");
+
+    }
     public String getEmail() {
         return email;
     }

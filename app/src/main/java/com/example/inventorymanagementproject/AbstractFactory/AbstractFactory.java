@@ -1,4 +1,4 @@
-package com.example.inventorymanagementproject.Factory;
+package com.example.inventorymanagementproject.AbstractFactory;
 
 import com.example.inventorymanagementproject.Builder.IBuilder;
 
