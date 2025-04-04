@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">Inventory Management Project</string>
+    <string name="app_name">InventoryManagementProject</string>
+    <string-array name="item_types_array">
+        <item>Clothing</item>
+        <item>Electronic</item>
+        <item>Furniture</item>
+    </string-array>
 </resources>

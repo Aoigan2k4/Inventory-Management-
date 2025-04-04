@@ -1,4 +1,4 @@
-package com.example.inventorymanagementproject.User;
+package com.example.inventorymanagementproject.Users;
 
 public class Staff extends User{
     public Staff(String id, String name, String email) {

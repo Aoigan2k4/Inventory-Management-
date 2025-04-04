@@ -9,16 +9,12 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.inventorymanagementproject.User.Admin;
-import com.example.inventorymanagementproject.User.Client;
-import com.example.inventorymanagementproject.User.Staff;
-import com.example.inventorymanagementproject.User.User;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import com.example.inventorymanagementproject.Users.Admin;
+import com.example.inventorymanagementproject.Users.Client;
+import com.example.inventorymanagementproject.Users.Staff;
+import com.example.inventorymanagementproject.Users.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -54,29 +50,43 @@ public class SignUp extends AppCompatActivity {
         login.setOnClickListener(v -> LogInLink());
     }
 
-    private void SignUpBtn(){
+    private void SignUpBtn() {
         String username = usernameTxt.getText().toString().trim();
         String email = emailTxt.getText().toString().trim();
         String password = passTxt.getText().toString().trim();
+
+        // Get the selected role from the radio group
         int selectedRoleId = roles.getCheckedRadioButtonId();
-        RadioButton selectedRadioButton = findViewById(selectedRoleId);
-        String selectedRole = selectedRadioButton.getText().toString();
+        String selectedRole;
+        if (selectedRoleId == -1) {
+            selectedRole = "Client"; // default role if none is selected
+        } else {
+            RadioButton selectedRadioButton = findViewById(selectedRoleId);
+            selectedRole = selectedRadioButton.getText().toString();
+        }
+
         mng = FirebaseManager.getInstance();
         db = mng.getDb();
         mAuth = mng.getAuth();
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
-                    if(task.isComplete()) {
+                    if (task.isComplete()) {
                         FirebaseUser user = mAuth.getCurrentUser();
-                        if(user != null) {
+                        if (user != null) {
                             String uid = user.getUid();
                             newUser = Roles(selectedRoleId, uid, username, email);
 
-                            db.collection("Users").document(selectedRole).collection(selectedRole).document(newUser.getId()).set(newUser)
+                            db.collection("Users")
+                                    .document(selectedRole)
+                                    .collection(selectedRole)
+                                    .document(newUser.getId())
+                                    .set(newUser)
                                     .addOnSuccessListener(a -> {
                                         Toast.makeText(SignUp.this, "User created!", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(SignUp.this, Dashboard.class);
+                                        // Navigate to InventoryActivity and pass the selected role
+                                        Intent intent = new Intent(SignUp.this, InventoryActivity.class);
+                                        intent.putExtra("role", selectedRole);
                                         startActivity(intent);
                                         finish();
                                     })
@@ -84,8 +94,7 @@ public class SignUp extends AppCompatActivity {
                                         Toast.makeText(SignUp.this, e.toString(), Toast.LENGTH_LONG).show();
                                         login.setText(e.toString());
                                     });
-                        }
-                        else {
+                        } else {
                             Toast.makeText(SignUp.this, "Failed to create user Auth", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -96,21 +105,21 @@ public class SignUp extends AppCompatActivity {
         if (code == R.id.adminRadioButton) {
             newUser = new Admin(uid, username, email);
             return newUser;
-        }
-        else if (code == R.id.staffRadioButton){
+        } else if (code == R.id.staffRadioButton) {
             newUser = new Staff(uid, username, email);
             return newUser;
-        }
-        else if (code == R.id.clientRadioButton){
+        } else if (code == R.id.clientRadioButton) {
             newUser = new Client(uid, username, email);
             return newUser;
-        }
-        else{
-            return null;
+        } else {
+            // Fallback default if no radio button is selected
+            newUser = new Client(uid, username, email);
+            return newUser;
         }
     }
 
     private void LogInLink(){
+        // Navigate back to the LogIn screen
         Intent intent = new Intent(SignUp.this, LogIn.class);
         startActivity(intent);
         finish();

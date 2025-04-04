@@ -1,6 +1,6 @@
-package com.example.inventorymanagementproject.User;
+package com.example.inventorymanagementproject.Users;
 
-public abstract class User {
+public  class User {
     private final String id;
     private String username;
     private String email;
@@ -16,7 +16,7 @@ public abstract class User {
         displayItems();
     }
 
-    protected abstract void filterItems();
+    protected  void filterItems(){}
 
 
     private void displayItems() {
