@@ -1,79 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/inventoryLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp" >
+    android:layout_height="match_parent">
 
-    <!-- Item ID -->
-    <EditText
-        android:id="@+id/editItemId"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Item ID" />
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <!-- Name -->
-    <EditText
-        android:id="@+id/editItemName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Item Name" />
+        <EditText
+            android:id="@+id/editItemId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Item ID" />
 
-    <!-- Brand -->
-    <EditText
-        android:id="@+id/editItemBrand"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Brand" />
+        <EditText
+            android:id="@+id/editItemName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Item Name" />
 
-    <!-- Price -->
-    <EditText
-        android:id="@+id/editItemPrice"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Price" />
+        <EditText
+            android:id="@+id/editItemBrand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Brand" />
 
-    <!-- Description -->
-    <EditText
-        android:id="@+id/editItemDesc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Description" />
+        <EditText
+            android:id="@+id/editItemPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Price" />
 
-    <!-- Quantity -->
-    <EditText
-        android:id="@+id/editItemQuantity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Quantity" />
+        <EditText
+            android:id="@+id/editItemDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Description" />
 
-    <!-- Spinner for item type -->
-    <Spinner
-        android:id="@+id/spinnerType"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/editItemQuantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Quantity" />
 
-    <!-- CREATE Button -->
-    <Button
-        android:id="@+id/btnCreate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Create Item" />
+        <!-- This is your create (submit) button -->
+        <Button
+            android:id="@+id/btnCreate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Create Item" />
 
-    <!-- UPDATE Button -->
-    <Button
-        android:id="@+id/btnUpdate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Update Item" />
-
-    <!-- DELETE Button -->
-    <Button
-        android:id="@+id/btnDelete"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Delete Item" />
-
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>

@@ -2,6 +2,7 @@ package com.example.inventorymanagementproject;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +23,7 @@ public class InventoryListActivity extends AppCompatActivity implements Inventor
     private InventoryAdapter adapter;
     private List<Items> itemList;
     private FirebaseFirestore db;
+    private Button btnCreateItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,14 @@ public class InventoryListActivity extends AppCompatActivity implements Inventor
         itemList = new ArrayList<>();
         adapter = new InventoryAdapter(itemList, this);
         recyclerView.setAdapter(adapter);
+
+        btnCreateItem = findViewById(R.id.btnCreateItem);
+        btnCreateItem.setOnClickListener(v -> {
+            // Navigate to the create item screen.
+            // Here, we assume InventoryActivity is used to create an item.
+            Intent intent = new Intent(InventoryListActivity.this, InventoryActivity.class);
+            startActivity(intent);
+        });
 
         db = FirebaseFirestore.getInstance();
         loadItems();
