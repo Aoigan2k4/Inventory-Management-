@@ -29,7 +29,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.Item
     @NonNull
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_inventory, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom, parent, false);
         return new ItemViewHolder(v);
     }
 
@@ -45,21 +45,21 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.Item
     }
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
-        TextView tvName, tvBrand, tvPrice, tvQuantity;
+        TextView Name, Brand, Price, Quantity;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvName = itemView.findViewById(R.id.tvItemName);
-            tvBrand = itemView.findViewById(R.id.tvItemBrand);
-            tvPrice = itemView.findViewById(R.id.tvItemPrice);
-            tvQuantity = itemView.findViewById(R.id.tvItemQuantity);
+            Name = itemView.findViewById(R.id.name);
+            Brand = itemView.findViewById(R.id.brand);
+            Price = itemView.findViewById(R.id.price);
+            Quantity = itemView.findViewById(R.id.quantity);
         }
 
         public void bind(Item item, OnItemClickListener listener) {
-            tvName.setText(item.getName());
-            tvBrand.setText(item.getBrand());
-            tvPrice.setText(item.getPrice());
-            tvQuantity.setText(item.getQuantity());
+            Name.setText(item.getName());
+            Brand.setText("Brand: " + item.getBrand());
+            Price.setText("Price: $" + item.getPrice());
+            Quantity.setText("Quantity in Stock: " + item.getQuantity());
             itemView.setOnClickListener(v -> listener.onItemClick(item));
         }
     }

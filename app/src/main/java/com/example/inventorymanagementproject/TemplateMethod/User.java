@@ -16,13 +16,14 @@ public  class User {
         displayItems();
     }
 
-    protected  void filterItems(){}
-
+    protected void filterItems() {
+    }
 
     private void displayItems() {
         System.out.println("Displaying products...");
 
     }
+
     public String getEmail() {
         return email;
     }
@@ -42,5 +43,5 @@ public  class User {
     public void setUsername(String username) {
         this.username = username;
     }
-}
 
+}

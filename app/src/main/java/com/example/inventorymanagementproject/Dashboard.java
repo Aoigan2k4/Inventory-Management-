@@ -6,9 +6,12 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class Dashboard extends AppCompatActivity {
 
-    Button update, view, add, logout;
+    Button view, add, logout;
+    FirebaseManager mng;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,6 +23,7 @@ public class Dashboard extends AppCompatActivity {
 
         view.setOnClickListener(v -> View());
         add.setOnClickListener(v -> Add());
+        logout.setOnClickListener(v -> LogOut());
     }
 
     private void View() {
@@ -28,8 +32,18 @@ public class Dashboard extends AppCompatActivity {
         finish();
     }
 
-     private void Add() {
+    private void Add() {
         Intent intent = new Intent(Dashboard.this, InventoryActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void LogOut() {
+        mng = FirebaseManager.getInstance();
+        mng.getAuth().signOut();
+
+        Intent intent = new Intent(Dashboard.this, LogIn.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 }

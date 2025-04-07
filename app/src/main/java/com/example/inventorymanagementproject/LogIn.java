@@ -26,7 +26,7 @@ public class LogIn extends AppCompatActivity {
     RadioGroup roles;
     RadioButton admin, staff, client;
     Button loginBtn;
-    TextView signUp;
+    TextView signUp, forgotPass;
     FirebaseAuth mAuth;
     FirebaseManager mng;
 
@@ -35,7 +35,6 @@ public class LogIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
 
-        // Initialize UI components
         emailTxt = findViewById(R.id.emailTxt);
         passTxt = findViewById(R.id.passwordTxt);
         loginBtn = findViewById(R.id.loginButton);
@@ -44,11 +43,11 @@ public class LogIn extends AppCompatActivity {
         admin = findViewById(R.id.adminRadioButton);
         staff = findViewById(R.id.staffRadioButton);
         client = findViewById(R.id.clientRadioButton);
+        forgotPass = findViewById(R.id.forgotPassword);
 
-        // Set up SignUp link click
         signUp.setOnClickListener(v -> signUp());
+        forgotPass.setOnClickListener(v -> forgotPass());
 
-        // Login button click event
         loginBtn.setOnClickListener(view -> {
             String email = emailTxt.getText().toString().trim();
             String password = passTxt.getText().toString().trim();
@@ -59,10 +58,8 @@ public class LogIn extends AppCompatActivity {
                 mAuth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(LogIn.this, task -> {
                             if (task.isSuccessful()) {
-                                // Get selected role from the radio group
                                 int selectedRoleId = roles.getCheckedRadioButtonId();
                                 if (selectedRoleId == -1) {
-                                    // No role selected: either show an error or assign a default
                                     Toast.makeText(LogIn.this, "Please select a role.", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
@@ -70,7 +67,7 @@ public class LogIn extends AppCompatActivity {
                                 String role = selectedRoleButton.getText().toString(); // e.g., "Admin", "Staff", "Client"
 
                                 FirebaseUser loggedInUser = mAuth.getCurrentUser();
-                                // Navigate to InventoryActivity and pass the role
+
                                 Intent intent = new Intent(LogIn.this, Dashboard.class);
 
                                 intent.putExtra("role", role);
@@ -96,6 +93,12 @@ public class LogIn extends AppCompatActivity {
 
     private void signUp() {
         Intent intent = new Intent(LogIn.this, SignUp.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void forgotPass() {
+        Intent intent = new Intent(LogIn.this, ForgotPass.class);
         startActivity(intent);
         finish();
     }

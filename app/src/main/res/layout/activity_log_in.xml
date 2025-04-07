@@ -60,6 +60,16 @@
                 android:text="Client" />
         </RadioGroup>
 
+        <TextView
+            android:id="@+id/forgotPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Forgot password?"
+            android:textColor="@color/blue"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="128dp"/>
+
         <Button
             android:id="@+id/loginButton"
             android:layout_width="match_parent"
