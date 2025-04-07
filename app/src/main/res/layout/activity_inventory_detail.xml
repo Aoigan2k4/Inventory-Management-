@@ -10,13 +10,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Input fields for item details -->
-        <EditText
-            android:id="@+id/editItemId"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Item ID" />
-
         <EditText
             android:id="@+id/editItemName"
             android:layout_width="match_parent"
@@ -47,17 +40,20 @@
             android:layout_height="wrap_content"
             android:hint="Quantity" />
 
-        <!-- Buttons for update and delete actions -->
         <Button
             android:id="@+id/btnUpdate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Update Item" />
+            android:text="UPDATE"
+            android:backgroundTint="@color/darkBlue"
+            android:layout_margin="16dp"/>
 
         <Button
             android:id="@+id/btnDelete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Delete Item" />
+            android:text="DELETE"
+            android:backgroundTint="@color/red"
+            android:layout_margin="16dp"/>
     </LinearLayout>
 </ScrollView>

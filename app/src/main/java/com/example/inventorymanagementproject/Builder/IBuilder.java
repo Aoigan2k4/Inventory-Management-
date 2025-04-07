@@ -7,4 +7,6 @@ public interface IBuilder {
     void SetPrice(String price);
     void SetDesc(String desc);
     void SetQuantity(String quantity);
+    void SetType(String type);
+    Item getItem();
 }

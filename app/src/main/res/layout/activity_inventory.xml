@@ -1,31 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp">
 
-        <EditText
-            android:id="@+id/editItemId"
+        <Button
+            android:id="@+id/btnElectronic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Item ID" />
+            android:text="Electronic"
+            android:backgroundTint="@color/blue"
+            android:layout_margin="16dp"/>
+
+        <Button
+            android:id="@+id/btnClothing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Clothing"
+            android:backgroundTint="@color/red"
+            android:layout_margin="16dp"/>
+
+        <Button
+            android:id="@+id/btnFurniture"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Furniture"
+            android:backgroundTint="@color/yellow"
+            android:layout_margin="16dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/editId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:visibility="gone">
 
         <EditText
             android:id="@+id/editItemName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="text"
             android:hint="Item Name" />
 
         <EditText
             android:id="@+id/editItemBrand"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="text"
             android:hint="Brand" />
 
         <EditText
@@ -38,20 +69,22 @@
             android:id="@+id/editItemDesc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="text"
             android:hint="Description" />
 
         <EditText
             android:id="@+id/editItemQuantity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="number"
             android:hint="Quantity" />
 
-        <!-- This is your create (submit) button -->
         <Button
             android:id="@+id/btnCreate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Create Item" />
+            android:text="Create Item"
+            android:backgroundTint="@color/darkBlue"/>
 
     </LinearLayout>
-</ScrollView>
+</LinearLayout>

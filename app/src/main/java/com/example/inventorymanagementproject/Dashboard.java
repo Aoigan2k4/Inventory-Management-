@@ -1,32 +1,35 @@
 package com.example.inventorymanagementproject;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.inventorymanagementproject.Builder.Engineer;
-import com.example.inventorymanagementproject.Builder.Items;
-import com.example.inventorymanagementproject.AbstractFactory.ClothingFactory;
-
 public class Dashboard extends AppCompatActivity {
 
+    Button update, view, add, logout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        //Button { //Clothing
-            Items item = new Items();
-            ClothingFactory clothingFactory = new ClothingFactory();
-            item.setQuantity("10");
+        add = findViewById(R.id.AddItems);
+        view = findViewById(R.id.ViewInventory);
+        logout = findViewById(R.id.LogOut);
 
-            Engineer engineer = new Engineer(clothingFactory.buildClothing());
-            engineer.BuildItem(item);
+        view.setOnClickListener(v -> View());
+        add.setOnClickListener(v -> Add());
+    }
 
-        //}
+    private void View() {
+        Intent intent = new Intent(Dashboard.this, InventoryListActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
-        // Button Submit {
-        // Saved to Firebase
-        // }
+     private void Add() {
+        Intent intent = new Intent(Dashboard.this, InventoryActivity.class);
+        startActivity(intent);
     }
 }

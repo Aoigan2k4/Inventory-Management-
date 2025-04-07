@@ -12,15 +12,14 @@
         android:theme="@style/Theme.InventoryManagementProject"
         tools:targetApi="31">
 
-        <!-- Declare Dashboard, LogIn, and SignUp -->
         <activity
             android:name=".Dashboard"
             android:exported="false" />
         <activity
-            android:name=".LogIn"
+            android:name=".SignUp"
             android:exported="false" />
         <activity
-            android:name=".SignUp"
+            android:name=".LogIn"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,7 +27,6 @@
             </intent-filter>
         </activity>
 
-        <!-- Add InventoryActivity declaration -->
         <activity
             android:name=".InventoryActivity"
             android:exported="false" />
@@ -42,5 +40,4 @@
             android:exported="false" />
 
     </application>
-
 </manifest>

@@ -3,22 +3,25 @@ package com.example.inventorymanagementproject;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.inventorymanagementproject.Builder.Items;
+import com.example.inventorymanagementproject.Builder.Item;
 import java.util.List;
 
 public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.ItemViewHolder> {
 
     public interface OnItemClickListener {
-        void onItemClick(Items item);
+        void onItemSelected(AdapterView<?> parent, View v, int position, long id);
+
+        void onItemClick(Item item);
     }
 
-    private List<Items> itemList;
+    private List<Item> itemList;
     private OnItemClickListener listener;
 
-    public InventoryAdapter(List<Items> itemList, OnItemClickListener listener) {
+    public InventoryAdapter(List<Item> itemList, OnItemClickListener listener) {
         this.itemList = itemList;
         this.listener = listener;
     }
@@ -32,7 +35,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.Item
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
-        Items item = itemList.get(position);
+        Item item = itemList.get(position);
         holder.bind(item, listener);
     }
 
@@ -52,7 +55,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.Item
             tvQuantity = itemView.findViewById(R.id.tvItemQuantity);
         }
 
-        public void bind(Items item, OnItemClickListener listener) {
+        public void bind(Item item, OnItemClickListener listener) {
             tvName.setText(item.getName());
             tvBrand.setText(item.getBrand());
             tvPrice.setText(item.getPrice());

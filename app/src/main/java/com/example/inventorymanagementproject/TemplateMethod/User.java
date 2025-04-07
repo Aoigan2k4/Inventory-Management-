@@ -1,4 +1,4 @@
-package com.example.inventorymanagementproject.Users;
+package com.example.inventorymanagementproject.TemplateMethod;
 
 public  class User {
     private final String id;

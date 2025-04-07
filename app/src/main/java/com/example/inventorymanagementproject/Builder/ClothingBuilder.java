@@ -2,10 +2,10 @@ package com.example.inventorymanagementproject.Builder;
 
 public class ClothingBuilder implements IBuilder{
 
-    Items item;
+    Item item;
 
     public ClothingBuilder(){
-        this.item = new Items();
+        this.item = new Item();
     }
 
     @Override
@@ -38,5 +38,13 @@ public class ClothingBuilder implements IBuilder{
         this.item.setQuantity(quantity);
     }
 
+    @Override
+    public void SetType(String type) {
+        this.item.setType(type);
+    }
 
+    @Override
+    public Item getItem() {
+        return item;
+    }
 }

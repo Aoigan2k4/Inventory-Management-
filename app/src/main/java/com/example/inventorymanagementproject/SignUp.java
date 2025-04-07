@@ -11,10 +11,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.inventorymanagementproject.Users.Admin;
-import com.example.inventorymanagementproject.Users.Client;
-import com.example.inventorymanagementproject.Users.Staff;
-import com.example.inventorymanagementproject.Users.User;
+import com.example.inventorymanagementproject.TemplateMethod.Admin;
+import com.example.inventorymanagementproject.TemplateMethod.Client;
+import com.example.inventorymanagementproject.TemplateMethod.Staff;
+import com.example.inventorymanagementproject.TemplateMethod.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -55,7 +55,6 @@ public class SignUp extends AppCompatActivity {
         String email = emailTxt.getText().toString().trim();
         String password = passTxt.getText().toString().trim();
 
-        // Get the selected role from the radio group
         int selectedRoleId = roles.getCheckedRadioButtonId();
         String selectedRole;
         if (selectedRoleId == -1) {
@@ -84,8 +83,7 @@ public class SignUp extends AppCompatActivity {
                                     .set(newUser)
                                     .addOnSuccessListener(a -> {
                                         Toast.makeText(SignUp.this, "User created!", Toast.LENGTH_SHORT).show();
-                                        // Navigate to InventoryActivity and pass the selected role
-                                        Intent intent = new Intent(SignUp.this, InventoryActivity.class);
+                                        Intent intent = new Intent(SignUp.this, Dashboard.class);
                                         intent.putExtra("role", selectedRole);
                                         startActivity(intent);
                                         finish();
@@ -112,14 +110,12 @@ public class SignUp extends AppCompatActivity {
             newUser = new Client(uid, username, email);
             return newUser;
         } else {
-            // Fallback default if no radio button is selected
             newUser = new Client(uid, username, email);
             return newUser;
         }
     }
 
     private void LogInLink(){
-        // Navigate back to the LogIn screen
         Intent intent = new Intent(SignUp.this, LogIn.class);
         startActivity(intent);
         finish();

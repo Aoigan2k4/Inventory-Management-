@@ -2,10 +2,10 @@ package com.example.inventorymanagementproject.Builder;
 
 public class ElectronicBuilder implements IBuilder {
 
-    Items item;
+    Item item;
 
     public ElectronicBuilder(){
-        this.item = new Items();
+        this.item = new Item();
     }
 
     @Override
@@ -36,5 +36,15 @@ public class ElectronicBuilder implements IBuilder {
     @Override
     public void SetQuantity(String quantity) {
         this.item.setQuantity(quantity);
+    }
+
+    @Override
+    public void SetType(String type) {
+        this.item.setType(type);
+    }
+
+    @Override
+    public Item getItem() {
+        return item;
     }
 }

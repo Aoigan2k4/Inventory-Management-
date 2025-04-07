@@ -8,12 +8,17 @@ public class Engineer {
     }
 
     //ID will be auto-generated
-    public void BuildItem(Items item){
-        this.iBuilder.SetID(item.getId());
-        this.iBuilder.SetName(item.getName());
-        this.iBuilder.SetBrand(item.getBrand());
-        this.iBuilder.SetPrice(item.getPrice());
-        this.iBuilder.SetDesc(item.getDesc());
-        this.iBuilder.SetQuantity(item.getQuantity());
+    public void BuildItem(String id, String name, String brand, String price, String desc, String quantity, String itemType){
+        this.iBuilder.SetID(id);
+        this.iBuilder.SetName(name);
+        this.iBuilder.SetBrand(brand);
+        this.iBuilder.SetPrice(price);
+        this.iBuilder.SetDesc(desc);
+        this.iBuilder.SetQuantity(quantity);
+        this.iBuilder.SetType(itemType);
+    }
+
+    public Item getItems() {
+        return iBuilder.getItem();
     }
 }

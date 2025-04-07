@@ -1,12 +1,21 @@
 package com.example.inventorymanagementproject.Builder;
 
-public class Items {
+public class Item {
     private String id;
     private String name;
     private String desc;
     private String brand;
     private String price;
     private String quantity;
+    private String type;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public String getId() {
         return id;
@@ -55,6 +64,4 @@ public class Items {
     public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
-
-
 }

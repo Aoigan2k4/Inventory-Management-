@@ -1,4 +1,4 @@
-package com.example.inventorymanagementproject.Users;
+package com.example.inventorymanagementproject.TemplateMethod;
 
 public class Staff extends User{
     public Staff(String id, String name, String email) {

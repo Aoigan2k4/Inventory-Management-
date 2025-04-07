@@ -71,7 +71,7 @@ public class LogIn extends AppCompatActivity {
 
                                 FirebaseUser loggedInUser = mAuth.getCurrentUser();
                                 // Navigate to InventoryActivity and pass the role
-                                Intent intent = new Intent(LogIn.this, InventoryListActivity.class);
+                                Intent intent = new Intent(LogIn.this, Dashboard.class);
 
                                 intent.putExtra("role", role);
                                 startActivity(intent);
@@ -95,22 +95,8 @@ public class LogIn extends AppCompatActivity {
     }
 
     private void signUp() {
-        // Retrieve the selected role from the radio group; if not selected, you can assign a default role.
-        int selectedRoleId = roles.getCheckedRadioButtonId();
-        String role;
-        if (selectedRoleId == -1) {
-            // No role selected; assign a default or prompt the user.
-            role = "Client"; // default role
-            // Optionally, you could also show a Toast to ask the user to select a role.
-        } else {
-            RadioButton selectedRoleButton = findViewById(selectedRoleId);
-            role = selectedRoleButton.getText().toString();
-        }
-
-        Intent intent = new Intent(LogIn.this, InventoryListActivity.class);
-        intent.putExtra("role", role);
+        Intent intent = new Intent(LogIn.this, SignUp.class);
         startActivity(intent);
         finish();
-
     }
 }
