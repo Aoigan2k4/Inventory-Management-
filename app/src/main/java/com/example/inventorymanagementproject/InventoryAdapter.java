@@ -14,7 +14,6 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.Item
 
     public interface OnItemClickListener {
         void onItemSelected(AdapterView<?> parent, View v, int position, long id);
-
         void onItemClick(Item item);
     }
 

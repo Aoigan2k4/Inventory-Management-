@@ -27,7 +27,6 @@ public class LogIn extends AppCompatActivity {
     RadioButton admin, staff, client;
     Button loginBtn;
     TextView signUp, forgotPass;
-    FirebaseAuth mAuth;
     FirebaseManager mng;
 
     @Override
@@ -47,48 +46,23 @@ public class LogIn extends AppCompatActivity {
 
         signUp.setOnClickListener(v -> signUp());
         forgotPass.setOnClickListener(v -> forgotPass());
+        loginBtn.setOnClickListener(v -> LogInBtn());
+    }
 
-        loginBtn.setOnClickListener(view -> {
-            String email = emailTxt.getText().toString().trim();
-            String password = passTxt.getText().toString().trim();
-            mng = FirebaseManager.getInstance();
-            mAuth = mng.getAuth();
+    private void LogInBtn() {
+        String email = emailTxt.getText().toString().trim();
+        String password = passTxt.getText().toString().trim();
+        int selectedRoleId = roles.getCheckedRadioButtonId();
 
-            if (!email.isEmpty() && !password.isEmpty()) {
-                mAuth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(LogIn.this, task -> {
-                            if (task.isSuccessful()) {
-                                int selectedRoleId = roles.getCheckedRadioButtonId();
-                                if (selectedRoleId == -1) {
-                                    Toast.makeText(LogIn.this, "Please select a role.", Toast.LENGTH_SHORT).show();
-                                    return;
-                                }
-                                RadioButton selectedRoleButton = findViewById(selectedRoleId);
-                                String role = selectedRoleButton.getText().toString(); // e.g., "Admin", "Staff", "Client"
+        if (selectedRoleId == -1) {
+            Toast.makeText(LogIn.this, "Please select a role.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        RadioButton selectedRoleButton = findViewById(selectedRoleId);
+        String role = selectedRoleButton.getText().toString();
 
-                                FirebaseUser loggedInUser = mAuth.getCurrentUser();
-
-                                Intent intent = new Intent(LogIn.this, Dashboard.class);
-
-                                intent.putExtra("role", role);
-                                startActivity(intent);
-                                finish();
-                            } else {
-                                Exception exception = task.getException();
-                                Log.w(TAG, "signInWithEmail:failure", exception);
-                                if (exception instanceof FirebaseAuthInvalidCredentialsException) {
-                                    Toast.makeText(LogIn.this, "Invalid email or password.", Toast.LENGTH_SHORT).show();
-                                } else if (exception instanceof FirebaseAuthInvalidUserException) {
-                                    Toast.makeText(LogIn.this, "User not found.", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(LogIn.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-            } else {
-                Toast.makeText(LogIn.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
-            }
-        });
+        mng = FirebaseManager.getInstance();
+        mng.LogInUser(this, email, password, role);
     }
 
     private void signUp() {

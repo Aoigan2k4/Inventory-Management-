@@ -43,6 +43,8 @@ public class InventoryListActivity extends AppCompatActivity implements Inventor
         recyclerView.setAdapter(adapter);
         db = FirebaseFirestore.getInstance();
 
+        adapter.notifyDataSetChanged();
+
         List<String> itemTypes = Arrays.asList("All", "Electronic", "Clothing", "Furniture");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, itemTypes);
         spinner.setAdapter(adapter);

@@ -1,27 +1,16 @@
-package com.example.inventorymanagementproject.TemplateMethod;
+package com.example.inventorymanagementproject;
 
 public  class User {
     private final String id;
     private String username;
     private String email;
+    private String role;
 
-    public User(String id, String name, String email) {
+    public User(String id, String name, String email, String role) {
         this.id = id;
         this.username = name;
         this.email = email;
-    }
-
-    public final void viewItems() {
-        filterItems();
-        displayItems();
-    }
-
-    protected void filterItems() {
-    }
-
-    private void displayItems() {
-        System.out.println("Displaying products...");
-
+        this.role = role;
     }
 
     public String getEmail() {
@@ -44,4 +33,11 @@ public  class User {
         this.username = username;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 }

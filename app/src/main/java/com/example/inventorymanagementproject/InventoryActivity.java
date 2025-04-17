@@ -69,14 +69,14 @@ public class InventoryActivity extends AppCompatActivity {
 
     private Item createElectronic(String id, String name, String brand, String price, String desc, String quantity, String itemType) {
         AbstractItem electronicFactory = AbstractItem.itemEnum(Type.Electronic);
-        Engineer engineer = new Engineer(electronicFactory.buildFurniture());
+        Engineer engineer = new Engineer(electronicFactory.buildElectronic());
         engineer.BuildItem(id, name, brand, price, desc, quantity, itemType);
         return engineer.getItems();
     }
 
     private Item createClothing(String id, String name, String brand, String price, String desc, String quantity, String itemType) {
         AbstractItem clothingFactory = AbstractItem.itemEnum(Type.Clothing);
-        Engineer engineer = new Engineer(clothingFactory.buildFurniture());
+        Engineer engineer = new Engineer(clothingFactory.buildClothing());
         engineer.BuildItem(id, name, brand, price, desc, quantity, itemType);
         return engineer.getItems();
     }
