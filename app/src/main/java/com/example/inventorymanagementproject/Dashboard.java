@@ -6,17 +6,19 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.inventorymanagementproject.Inventory.InventoryActivity;
+import com.example.inventorymanagementproject.Inventory.InventoryListActivity;
 import com.example.inventorymanagementproject.TemplateMethod.AdminAuthorization;
 import com.example.inventorymanagementproject.TemplateMethod.ClientAuthorization;
 import com.example.inventorymanagementproject.TemplateMethod.RoleAuthorization;
 import com.example.inventorymanagementproject.TemplateMethod.StaffAuthorization;
-import com.google.firebase.auth.FirebaseAuth;
+import com.example.inventorymanagementproject.UserList.UserListView;
 
 public class Dashboard extends AppCompatActivity {
 
-    Button view, add, logout;
+    Button view, add, logout, adduser, viewusers;
     FirebaseManager mng;
-    String role;
+    String role, password, email;
     RoleAuthorization authorization;
     Intent intent;
     @Override
@@ -27,13 +29,19 @@ public class Dashboard extends AppCompatActivity {
         add = findViewById(R.id.AddItems);
         view = findViewById(R.id.ViewInventory);
         logout = findViewById(R.id.LogOut);
+        adduser = findViewById(R.id.AddUser);
+        viewusers = findViewById(R.id.ViewUsers);
 
         view.setOnClickListener(v -> View());
         add.setOnClickListener(v -> Add());
+        viewusers.setOnClickListener(v -> ViewUser());
         logout.setOnClickListener(v -> LogOut());
+        adduser.setOnClickListener(v -> AddUser());
 
         intent = getIntent();
         role = intent.getStringExtra("role");
+        password = intent.getStringExtra("password") == null ? "" : intent.getStringExtra("password");
+        email = intent.getStringExtra("email") == null ? "" : intent.getStringExtra("email");
 
         assert role != null;
         if (role.equals("Admin")) {
@@ -47,7 +55,6 @@ public class Dashboard extends AppCompatActivity {
         authorization.ConfigureAuth(role, this);
     }
 
-
     private void View() {
         Intent intent = new Intent(Dashboard.this, InventoryListActivity.class);
         startActivity(intent);
@@ -58,6 +65,19 @@ public class Dashboard extends AppCompatActivity {
         Intent intent = new Intent(Dashboard.this, InventoryActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private void ViewUser() {
+        Intent intent = new Intent(Dashboard.this, UserListView.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void AddUser() {
+        Intent intent = new Intent(Dashboard.this, AddUser.class);
+        intent.putExtra("email", email);
+        intent.putExtra("password", password);
+        startActivity(intent);
     }
 
     private void LogOut() {

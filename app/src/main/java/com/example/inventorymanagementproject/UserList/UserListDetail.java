@@ -1,0 +1,108 @@
+package com.example.inventorymanagementproject.UserList;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+import com.example.inventorymanagementproject.Builder.Item;
+import com.example.inventorymanagementproject.Facade.InventoryFacade;
+import com.example.inventorymanagementproject.Facade.UserListFacade;
+import com.example.inventorymanagementproject.FirebaseManager;
+import com.example.inventorymanagementproject.ForgotPass;
+import com.example.inventorymanagementproject.Inventory.InventoryDetailActivity;
+import com.example.inventorymanagementproject.LogIn;
+import com.example.inventorymanagementproject.R;
+import com.example.inventorymanagementproject.User;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+public class UserListDetail extends AppCompatActivity {
+    private EditText editUserName, editEmail, editRole;
+    private Button btnBack;
+    private UserListFacade userListFacade;
+    private FirebaseFirestore db;
+    private FirebaseManager mng;
+    private FirebaseAuth mAuth;
+    private String userId, role;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_user_list);
+
+        editUserName = findViewById(R.id.editUserName);
+        editEmail = findViewById(R.id.editUserEmail);
+        editRole = findViewById(R.id.editUserRole);
+        btnBack = findViewById(R.id.btnBack);
+
+        userListFacade = new UserListFacade();
+        mng = FirebaseManager.getInstance();
+        db = mng.getDb();
+
+        userId = getIntent().getStringExtra("userid");
+        role = getIntent().getStringExtra("role");
+
+        btnBack.setOnClickListener(v -> back());
+
+        if(userId != null) {
+            loadUser(userId);
+        }
+    }
+
+    private void loadUser(String userId) {
+        db.collection("Users").document(role).collection(role)
+                .document(userId).get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if(documentSnapshot.exists()) {
+                        User user = documentSnapshot.toObject(User.class);
+                        if(user != null) {
+                           editUserName.setText(user.getUsername());
+                           editEmail.setText(user.getEmail());
+                           editRole.setText(user.getRole());
+                        }
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(UserListDetail.this, "Failed to load users", Toast.LENGTH_SHORT).show();
+                });
+    }
+
+    private void deleteUser() {
+        User user = new User();
+        user.setId(userId);
+        user.setRole(role);
+        user.setEmail(editEmail.getText().toString().trim());
+        user.setUsername(editUserName.getText().toString().trim());
+
+        userListFacade.deleteUser(user, new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(UserListDetail.this, "User deleted!", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }, new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(UserListDetail.this, "Delete failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void back() {
+        Intent intent = new Intent(UserListDetail.this, UserListView.class);
+        startActivity(intent);
+        finish();
+    }
+}

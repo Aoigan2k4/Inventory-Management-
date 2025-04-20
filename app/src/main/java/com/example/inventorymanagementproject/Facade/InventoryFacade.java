@@ -9,7 +9,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
- * Facade for Inventory Management (Create, Update, Delete).
+ * Facade for Inventory Management (Create, Read, Update, Delete).
  */
 public class InventoryFacade {
     private final FirebaseFirestore db;
@@ -18,9 +18,6 @@ public class InventoryFacade {
         db = FirebaseManager.getInstance().getDb();
     }
 
-    /**
-     * CREATE: Adds a new item document to Firestore
-     */
     public void createItem(@NonNull Item item,
                            @NonNull OnSuccessListener<Void> onSuccessListener,
                            @NonNull OnFailureListener onFailureListener) {
@@ -33,9 +30,6 @@ public class InventoryFacade {
                 .addOnFailureListener(onFailureListener);
     }
 
-    /**
-     * UPDATE: Updates an existing item in Firestore
-     */
     public void updateItem(@NonNull Item item,
                            @NonNull OnSuccessListener<Void> onSuccessListener,
                            @NonNull OnFailureListener onFailureListener) {
@@ -48,9 +42,6 @@ public class InventoryFacade {
                 .addOnFailureListener(onFailureListener);
     }
 
-    /**
-     * DELETE: Removes an item from Firestore
-     */
     public void deleteItem(@NonNull Item item,
                            @NonNull OnSuccessListener<Void> onSuccessListener,
                            @NonNull OnFailureListener onFailureListener) {

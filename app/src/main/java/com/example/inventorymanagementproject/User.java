@@ -1,16 +1,13 @@
 package com.example.inventorymanagementproject;
 
 public  class User {
-    private final String id;
+    private String id;
     private String username;
     private String email;
     private String role;
 
-    public User(String id, String name, String email, String role) {
+    public void setId(String id) {
         this.id = id;
-        this.username = name;
-        this.email = email;
-        this.role = role;
     }
 
     public String getEmail() {

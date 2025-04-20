@@ -1,4 +1,4 @@
-package com.example.inventorymanagementproject;
+package com.example.inventorymanagementproject.Inventory;
 
 import android.os.Bundle;
 import android.view.View;
@@ -11,13 +11,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.inventorymanagementproject.Builder.Item;
 import com.example.inventorymanagementproject.Facade.InventoryFacade;
+import com.example.inventorymanagementproject.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class InventoryDetailActivity extends AppCompatActivity {
 
-    private EditText editId, editName, editBrand, editPrice, editDesc, editQuantity;
+    private EditText editName, editBrand, editPrice, editDesc, editQuantity;
     private Button btnUpdate, btnDelete;
     private InventoryFacade inventoryFacade;
     private FirebaseFirestore db;

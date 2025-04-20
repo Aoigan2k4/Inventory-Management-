@@ -10,6 +10,8 @@ public class AdminAuthorization extends RoleAuthorization{
     protected void SpecificRoles(String role, Activity activity) {
         if (role.equals("Admin")) {
             activity.findViewById(R.id.AddItems).setVisibility(View.VISIBLE);
+            activity.findViewById(R.id.AddUser).setVisibility(View.VISIBLE);
+            activity.findViewById(R.id.ViewUsers).setVisibility(View.VISIBLE);
         }
     }
 }

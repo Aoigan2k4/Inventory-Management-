@@ -10,6 +10,8 @@ public class StaffAuthorization extends RoleAuthorization{
     protected void SpecificRoles(String role, Activity activity) {
         if (role.equals("Staff")) {
             activity.findViewById(R.id.AddItems).setVisibility(View.VISIBLE);
+            activity.findViewById(R.id.AddUser).setVisibility(View.GONE);
+            activity.findViewById(R.id.ViewUsers).setVisibility(View.GONE);
         }
     }
 }

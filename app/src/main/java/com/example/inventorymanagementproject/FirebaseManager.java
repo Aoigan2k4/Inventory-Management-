@@ -39,14 +39,18 @@ public class FirebaseManager {
         return db;
     }
 
-    void CreateUser(Context context, String role, String password, String username, String email) {
+    void CreateUser(Context context, String role, String password, String username, String email, String adminPassword, String adminEmail, Boolean isAdmin) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener( task -> {
                     if (task.isSuccessful()) {
                         FirebaseUser user = mAuth.getCurrentUser();
                         if (user != null) {
                             String uid = user.getUid();
-                            User newUser = new User (uid, username, email, role);
+                            User newUser = new User();
+                            newUser.setId(uid);
+                            newUser.setRole(role);
+                            newUser.setEmail(email);
+                            newUser.setUsername(username);
 
                             db.collection("Users")
                                     .document(role)
@@ -55,9 +59,19 @@ public class FirebaseManager {
                                     .set(newUser)
                                     .addOnSuccessListener(a -> {
                                         Toast.makeText(context, "User created!", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(context, Dashboard.class);
-                                        intent.putExtra("role", role);
-                                        ((Activity) context).startActivity(intent);
+                                        if (isAdmin) {
+                                            mAuth.signOut();
+                                            LogInUser(context, adminEmail, adminPassword, "Admin");
+                                        }
+                                        else {
+                                            Intent intent = new Intent(context, Dashboard.class);
+                                            intent.putExtra("role", role);
+                                            if (role.equals("Admin")) {
+                                                intent.putExtra("email", email);
+                                                intent.putExtra("password", password);
+                                            }
+                                            ((Activity) context).startActivity(intent);
+                                        }
                                     })
                                     .addOnFailureListener(e -> {
                                         Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show();
@@ -77,6 +91,10 @@ public class FirebaseManager {
                             FirebaseUser loggedInUser = mAuth.getCurrentUser();
                             Intent intent = new Intent(context, Dashboard.class);
                             intent.putExtra("role", role);
+                            if (role.equals("Admin")) {
+                                intent.putExtra("email", email);
+                                intent.putExtra("password", password);
+                            }
                             ((Activity) context).startActivity(intent);
                         } else {
                             Exception exception = task.getException();

@@ -13,7 +13,7 @@
         android:id="@+id/signUpTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sign Up"
+        android:text="Add User"
         android:textSize="24dp"
         android:textStyle="bold"
         android:textColor="@color/blue"
@@ -43,21 +43,36 @@
         android:inputType=""
         android:layout_margin="15dp"/>
 
+    <RadioGroup
+        android:id="@+id/roleRadioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="24dp">
+        <RadioButton
+            android:id="@+id/adminRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Admin"/>
+
+        <RadioButton
+            android:id="@+id/staffRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Staff"/>
+
+        <RadioButton
+            android:id="@+id/clientRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Client" />
+    </RadioGroup>
+
     <Button
         android:id="@+id/SignUpBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sign Up"
+        android:text="Add User"
         android:backgroundTint="@color/blue"
         android:layout_margin="15dp"/>
-
-    <TextView
-        android:id="@+id/loginLink"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Already have an account? Log in"
-        android:textColor="@color/blue"
-        android:textStyle="bold"
-        android:layout_marginTop="16dp"/>
-
 </LinearLayout>

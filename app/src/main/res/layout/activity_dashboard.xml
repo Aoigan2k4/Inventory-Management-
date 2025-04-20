@@ -17,14 +17,6 @@
 <!--        android:textColor="@color/blue"-->
 <!--        android:layout_marginBottom="24dp"/>-->
 
-<!--    <Button-->
-<!--        android:id="@+id/UpdateInfo"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_margin="10dp"-->
-<!--        android:backgroundTint="@color/darkBlue"-->
-<!--        android:text="UPDATE INFO"/>-->
-
     <Button
         android:id="@+id/ViewInventory"
         android:layout_width="match_parent"
@@ -39,7 +31,24 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:backgroundTint="@color/darkBlue"
-        android:text="ADD ITEMS"/>
+        android:text="ADD ITEM"/>
+
+    <Button
+        android:id="@+id/ViewUsers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:backgroundTint="@color/darkBlue"
+        android:text="VIEW USERS"/>
+
+    <Button
+        android:id="@+id/AddUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:backgroundTint="@color/darkBlue"
+        android:text="ADD USER"/>
+
 
     <Button
         android:id="@+id/LogOut"

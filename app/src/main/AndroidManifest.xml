@@ -13,6 +13,15 @@
         android:theme="@style/Theme.InventoryManagementProject"
         tools:targetApi="31">
         <activity
+            android:name=".UserList.UserListDetail"
+            android:exported="false" />
+        <activity
+            android:name=".UserList.UserListView"
+            android:exported="false" />
+        <activity
+            android:name=".AddUser"
+            android:exported="false" />
+        <activity
             android:name=".ForgotPass"
             android:exported="false" />
         <activity
@@ -31,13 +40,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".InventoryActivity"
+            android:name=".Inventory.InventoryActivity"
             android:exported="false" />
         <activity
-            android:name=".InventoryListActivity"
+            android:name=".Inventory.InventoryListActivity"
             android:exported="false" />
         <activity
-            android:name=".InventoryDetailActivity"
+            android:name=".Inventory.InventoryDetailActivity"
             android:exported="false" />
     </application>
 

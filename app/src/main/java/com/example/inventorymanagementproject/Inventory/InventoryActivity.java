@@ -1,4 +1,4 @@
-package com.example.inventorymanagementproject;
+package com.example.inventorymanagementproject.Inventory;
 
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +15,7 @@ import com.example.inventorymanagementproject.AbstractFactory.Type;
 import com.example.inventorymanagementproject.Builder.Engineer;
 import com.example.inventorymanagementproject.Builder.Item;
 import com.example.inventorymanagementproject.Facade.InventoryFacade;
+import com.example.inventorymanagementproject.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
@@ -105,15 +106,12 @@ public class InventoryActivity extends AppCompatActivity {
         switch (itemType) {
             case "Electronic":
                 newItem = createElectronic(id, name, brand, price, desc, quantity, itemType);
-                Toast.makeText(this, "Electronic!", Toast.LENGTH_SHORT).show();
                 break;
             case "Clothing":
                 newItem = createClothing(id, name, brand, price, desc, quantity, itemType);
-                Toast.makeText(this, "Clothing!", Toast.LENGTH_SHORT).show();
                 break;
             case "Furniture":
                 newItem = createFurniture(id, name, brand, price, desc, quantity, itemType);
-                Toast.makeText(this, "Furniture!", Toast.LENGTH_SHORT).show();
                 break;
         }
 
