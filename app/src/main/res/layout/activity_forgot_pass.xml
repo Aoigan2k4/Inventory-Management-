@@ -6,6 +6,10 @@
     android:orientation="vertical"
     android:gravity="center_horizontal">
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
+
     <TextView
         android:id="@+id/Title"
         android:layout_width="wrap_content"
@@ -16,19 +20,25 @@
         android:textColor="@color/blue"
         android:layout_marginBottom="24dp"/>
 
-    <EditText
-        android:id="@+id/emailTxt"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:hint="Email"
-        android:layout_marginBottom="24dp"/>
+        android:layout_height="wrap_content"
+        android:hint="Email">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/emailTxt"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="24dp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/sendButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Send Email"
+        android:text="SEND EMAIL"
         android:backgroundTint="@color/blue"
-        android:layout_marginBottom="16dp"/>
+        android:layout_margin="16dp"/>
 
 </LinearLayout>

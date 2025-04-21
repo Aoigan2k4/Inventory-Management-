@@ -27,7 +27,7 @@
             android:id="@+id/email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="In Stock: 350"
+            android:text="Email: username@example.com"
             android:textSize="18sp"
             android:layout_marginTop="4dp"/>
 
@@ -35,7 +35,7 @@
             android:id="@+id/role"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Brand Name: Apple"
+            android:text="Role: Admin"
             android:textSize="18sp"
             android:layout_marginTop="2dp"/>
 

@@ -14,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.inventorymanagementproject.Inventory.InventoryDetailActivity;
+import com.example.inventorymanagementproject.Inventory.InventoryListActivity;
 import com.example.inventorymanagementproject.R;
 import com.example.inventorymanagementproject.User;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -53,8 +55,7 @@ public class UserListView extends AppCompatActivity implements UserListAdapter.O
         recyclerView.setAdapter(adapter);
         db = FirebaseFirestore.getInstance();
         String name = search.getText().toString();
-
-
+        
         List<String> userSort = Arrays.asList("All", "Admin", "Staff", "Client");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, userSort);
         spinner.setAdapter(adapter);
@@ -121,13 +122,19 @@ public class UserListView extends AppCompatActivity implements UserListAdapter.O
 
         query.get()
         .addOnSuccessListener(querySnapshot -> {
+            if (querySnapshot.isEmpty()) {
+                userList.clear();
+                adapter.notifyDataSetChanged();
+                return;
+            }
+
             for (DocumentSnapshot doc : querySnapshot.getDocuments()) {
                 User user = doc.toObject(User.class);
                 if (user != null) {
                     userList.add(user);
                 }
-                adapter.notifyDataSetChanged();
             }
+            adapter.notifyDataSetChanged();
         })
         .addOnFailureListener(e -> {
             Toast.makeText((UserListView.this), "Error loading users: " + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -138,5 +145,10 @@ public class UserListView extends AppCompatActivity implements UserListAdapter.O
     public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {}
 
     @Override
-    public void onItemClick(User user) {}
+    public void onItemClick(User user) {
+        Intent intent = new Intent(UserListView.this, UserListDetail.class);
+        intent.putExtra("userId", user.getId());
+        intent.putExtra("role", user.getRole());
+        startActivity(intent);
+    }
 }

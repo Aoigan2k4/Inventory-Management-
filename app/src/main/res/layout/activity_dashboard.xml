@@ -8,14 +8,14 @@
     android:orientation="vertical"
     android:gravity="center">
 
-<!--    <TextView-->
-<!--        android:id="@+id/AdminHP"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:textSize="24sp"-->
-<!--        android:textStyle="bold"-->
-<!--        android:textColor="@color/blue"-->
-<!--        android:layout_marginBottom="24dp"/>-->
+    <TextView
+        android:id="@+id/Greetings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/blue"
+        android:layout_marginBottom="24dp"/>
 
     <Button
         android:id="@+id/ViewInventory"

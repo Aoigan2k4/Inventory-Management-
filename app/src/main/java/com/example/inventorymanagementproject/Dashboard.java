@@ -3,6 +3,7 @@ package com.example.inventorymanagementproject;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,14 +14,18 @@ import com.example.inventorymanagementproject.TemplateMethod.ClientAuthorization
 import com.example.inventorymanagementproject.TemplateMethod.RoleAuthorization;
 import com.example.inventorymanagementproject.TemplateMethod.StaffAuthorization;
 import com.example.inventorymanagementproject.UserList.UserListView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class Dashboard extends AppCompatActivity {
 
     Button view, add, logout, adduser, viewusers;
     FirebaseManager mng;
+    FirebaseAuth mAuth;
     String role, password, email;
     RoleAuthorization authorization;
     Intent intent;
+    TextView greetings;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +36,7 @@ public class Dashboard extends AppCompatActivity {
         logout = findViewById(R.id.LogOut);
         adduser = findViewById(R.id.AddUser);
         viewusers = findViewById(R.id.ViewUsers);
+        greetings = findViewById(R.id.Greetings);
 
         view.setOnClickListener(v -> View());
         add.setOnClickListener(v -> Add());
@@ -38,8 +44,13 @@ public class Dashboard extends AppCompatActivity {
         logout.setOnClickListener(v -> LogOut());
         adduser.setOnClickListener(v -> AddUser());
 
+        mng = FirebaseManager.getInstance();
+        mAuth = mng.getAuth();
+
         intent = getIntent();
         role = intent.getStringExtra("role");
+        greetings.setText("Welcome " + role + ", " + mAuth.getCurrentUser().getDisplayName());
+
         password = intent.getStringExtra("password") == null ? "" : intent.getStringExtra("password");
         email = intent.getStringExtra("email") == null ? "" : intent.getStringExtra("email");
 

@@ -35,10 +35,12 @@ public class InventoryListActivity extends AppCompatActivity implements Inventor
     private String sortType;
     private EditText search;
     private Button btnSearch;
-    String name;
+    private String name;
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory_list);
 
@@ -104,16 +106,22 @@ public class InventoryListActivity extends AppCompatActivity implements Inventor
 
         query.get()
             .addOnSuccessListener(querySnapshot -> {
+                if (querySnapshot.isEmpty()) {
+                    itemList.clear();
+                    adapter.notifyDataSetChanged();
+                    return;
+                }
+
                 for (DocumentSnapshot doc : querySnapshot.getDocuments()) {
                     Item item = doc.toObject(Item.class);
                     if (item != null) {
                         itemList.add(item);
                     }
-                    adapter.notifyDataSetChanged();
                 }
+                adapter.notifyDataSetChanged();
             })
             .addOnFailureListener(e -> {
-                Toast.makeText(InventoryListActivity.this, "Error loading items: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Failed to fetch data.", Toast.LENGTH_SHORT).show();
             });
     }
 

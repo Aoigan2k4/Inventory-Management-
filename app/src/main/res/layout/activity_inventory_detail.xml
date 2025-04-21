@@ -13,41 +13,86 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Item Details"
+            android:text="ITEM DETAILS"
             android:textSize="24sp"
             android:textStyle="bold"
             android:textColor="@color/blue"
-            android:layout_marginBottom="24dp"/>
+            android:layout_marginBottom="16dp"/>
 
-        <EditText
-            android:id="@+id/editItemName"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Item Name" />
+            android:hint="">
 
-        <EditText
-            android:id="@+id/editItemBrand"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editItemName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:hint="Item Name"
+                android:layout_marginBottom="16dp"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Brand" />
+            android:hint="">
 
-        <EditText
-            android:id="@+id/editItemPrice"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editItemBrand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:hint="Brand"
+                android:layout_marginBottom="16dp"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Price" />
+            android:hint="">
 
-        <EditText
-            android:id="@+id/editItemDesc"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editItemPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:hint="Price"
+                android:layout_marginBottom="16dp"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Description" />
+            android:hint="">
 
-        <EditText
-            android:id="@+id/editItemQuantity"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editItemDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:hint="Description"
+                android:layout_marginBottom="16dp"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Quantity" />
+            android:hint="">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editItemQuantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:hint="Quantity"
+                android:layout_marginBottom="50dp"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btnUpdate"
@@ -55,14 +100,21 @@
             android:layout_height="wrap_content"
             android:text="UPDATE"
             android:backgroundTint="@color/darkBlue"
-            android:layout_margin="16dp"/>
-
+            android:layout_marginBottom="16dp"/>
         <Button
             android:id="@+id/btnDelete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="DELETE"
             android:backgroundTint="@color/red"
-            android:layout_margin="16dp"/>
+            android:layout_marginBottom="16dp"/>
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=" BACK"
+            android:backgroundTint="@color/yellow"
+            android:layout_marginBottom="16dp"/>
     </LinearLayout>
 </ScrollView>

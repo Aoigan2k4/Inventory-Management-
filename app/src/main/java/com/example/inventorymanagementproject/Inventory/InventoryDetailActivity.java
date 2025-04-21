@@ -1,5 +1,6 @@
 package com.example.inventorymanagementproject.Inventory;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,7 +12,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.inventorymanagementproject.Builder.Item;
 import com.example.inventorymanagementproject.Facade.InventoryFacade;
+import com.example.inventorymanagementproject.FirebaseManager;
 import com.example.inventorymanagementproject.R;
+import com.example.inventorymanagementproject.UserList.UserListDetail;
+import com.example.inventorymanagementproject.UserList.UserListView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -19,9 +23,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class InventoryDetailActivity extends AppCompatActivity {
 
     private EditText editName, editBrand, editPrice, editDesc, editQuantity;
-    private Button btnUpdate, btnDelete;
+    private Button btnUpdate, btnDelete, btnBack;
     private InventoryFacade inventoryFacade;
     private FirebaseFirestore db;
+    private FirebaseManager mng;
     private String itemId, type;
 
     @Override
@@ -36,9 +41,11 @@ public class InventoryDetailActivity extends AppCompatActivity {
         editQuantity = findViewById(R.id.editItemQuantity);
         btnUpdate = findViewById(R.id.btnUpdate);
         btnDelete = findViewById(R.id.btnDelete);
+        btnBack = findViewById(R.id.btnBack);
 
         inventoryFacade = new InventoryFacade();
-        db = FirebaseFirestore.getInstance();
+        mng = FirebaseManager.getInstance();
+        db = mng.getDb();
 
         itemId = getIntent().getStringExtra("itemId");
         type = getIntent().getStringExtra("type");
@@ -47,19 +54,9 @@ public class InventoryDetailActivity extends AppCompatActivity {
             loadItem(itemId);
         }
 
-        btnUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                updateItem();
-            }
-        });
-
-        btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                deleteItem();
-            }
-        });
+        btnUpdate.setOnClickListener(v-> updateItem());
+        btnDelete.setOnClickListener(v-> deleteItem());
+        btnBack.setOnClickListener(v-> back());
     }
 
     private void loadItem(String itemId) {
@@ -96,6 +93,8 @@ public class InventoryDetailActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Void aVoid) {
                 Toast.makeText(InventoryDetailActivity.this, "Item updated!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(InventoryDetailActivity.this, InventoryListActivity.class);
+                startActivity(intent);
                 finish();
             }
         }, new OnFailureListener() {
@@ -104,6 +103,12 @@ public class InventoryDetailActivity extends AppCompatActivity {
                 Toast.makeText(InventoryDetailActivity.this, "Update failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private void back(){
+        Intent intent = new Intent(InventoryDetailActivity.this, InventoryListActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void deleteItem() {

@@ -13,45 +13,68 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="User Details"
+            android:text="USER DETAILS"
             android:textSize="24sp"
             android:textStyle="bold"
             android:textColor="@color/blue"
             android:layout_marginBottom="24dp"/>
 
-        <EditText
-            android:id="@+id/editUserName"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Username" />
+            android:hint="Username">
 
-        <EditText
-            android:id="@+id/editUserEmail"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editUserName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:layout_marginBottom="24dp"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email" />
+            android:hint="Email">
 
-        <EditText
-            android:id="@+id/editUserRole"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editUserEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:layout_marginBottom="24dp"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Role" />
+            android:hint="Role">
 
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editUserRole"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:layout_marginBottom="24dp"/>
 
-<!--        <Button-->
-<!--            android:id="@+id/btnUpdate"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="UPDATE"-->
-<!--            android:backgroundTint="@color/darkBlue"-->
-<!--            android:layout_margin="16dp"/>-->
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btnBack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Back"
-            android:backgroundTint="@color/blue"
+            android:text="BACK"
+            android:backgroundTint="@color/darkBlue"
+            android:layout_margin="16dp"/>
+
+        <Button
+            android:id="@+id/btnDelete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="DELETE USER"
+            android:backgroundTint="@color/red"
             android:layout_margin="16dp"/>
     </LinearLayout>
 </ScrollView>

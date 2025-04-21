@@ -30,11 +30,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class UserListDetail extends AppCompatActivity {
     private EditText editUserName, editEmail, editRole;
-    private Button btnBack;
+    private Button btnBack, btnDelete;
     private UserListFacade userListFacade;
     private FirebaseFirestore db;
     private FirebaseManager mng;
-    private FirebaseAuth mAuth;
     private String userId, role;
 
     @Override
@@ -46,18 +45,23 @@ public class UserListDetail extends AppCompatActivity {
         editEmail = findViewById(R.id.editUserEmail);
         editRole = findViewById(R.id.editUserRole);
         btnBack = findViewById(R.id.btnBack);
+        btnDelete = findViewById(R.id.btnDelete);
 
         userListFacade = new UserListFacade();
         mng = FirebaseManager.getInstance();
         db = mng.getDb();
 
-        userId = getIntent().getStringExtra("userid");
+        userId = getIntent().getStringExtra("userId");
         role = getIntent().getStringExtra("role");
 
         btnBack.setOnClickListener(v -> back());
+        btnDelete.setOnClickListener(v -> deleteUser());
 
         if(userId != null) {
             loadUser(userId);
+        }
+        else {
+            Toast.makeText(UserListDetail.this, "User not found", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -72,6 +76,9 @@ public class UserListDetail extends AppCompatActivity {
                            editEmail.setText(user.getEmail());
                            editRole.setText(user.getRole());
                         }
+                    }
+                    else {
+                        Toast.makeText(UserListDetail.this, "User not found", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(e -> {
@@ -90,6 +97,8 @@ public class UserListDetail extends AppCompatActivity {
             @Override
             public void onSuccess(Void aVoid) {
                 Toast.makeText(UserListDetail.this, "User deleted!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(UserListDetail.this, UserListView.class);
+                startActivity(intent);
                 finish();
             }
         }, new OnFailureListener() {
