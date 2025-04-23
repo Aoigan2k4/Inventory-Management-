@@ -8,7 +8,7 @@ public class Engineer {
     }
 
     //ID will be auto-generated
-    public void BuildItem(String id, String name, String brand, String price, String desc, String quantity, String itemType){
+    public void BuildItem(String id, String name, String brand, Double price, String desc, int quantity, String itemType){
         this.iBuilder.SetID(id);
         this.iBuilder.SetName(name);
         this.iBuilder.SetBrand(brand);

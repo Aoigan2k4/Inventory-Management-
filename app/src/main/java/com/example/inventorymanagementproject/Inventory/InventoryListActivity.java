@@ -33,10 +33,9 @@ public class InventoryListActivity extends AppCompatActivity implements Inventor
     private FirebaseFirestore db;
     private Spinner spinner;
     private String sortType;
-    private EditText search;
+    private EditText search, brandTxt, priceTxt, quantityTxt;
     private Button btnSearch;
-    private String name;
-
+    private String name, brand, price, quantity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -52,8 +51,15 @@ public class InventoryListActivity extends AppCompatActivity implements Inventor
         recyclerView.setAdapter(adapter);
         db = FirebaseFirestore.getInstance();
         search = findViewById(R.id.ItemName);
+        brandTxt = findViewById(R.id.Brand);
+        priceTxt = findViewById(R.id.Price);
+        quantityTxt = findViewById(R.id.Quantity);
         btnSearch = findViewById(R.id.searchBtn);
+
         name = search.getText().toString();
+        brand = brandTxt.getText().toString();
+        price = priceTxt.getText().toString().trim();
+        quantity = quantityTxt.getText().toString().trim();
 
         List<String> itemTypes = Arrays.asList("All", "Electronic", "Clothing", "Furniture");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, itemTypes);
@@ -62,13 +68,13 @@ public class InventoryListActivity extends AppCompatActivity implements Inventor
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 sortType = parent.getItemAtPosition(position).toString();
-                loadAllItems(sortType, name);
+                loadAllItems(sortType, name, brand, price, quantity);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 sortType = parent.getItemAtPosition(0).toString();
-                loadAllItems(sortType, name);
+                loadAllItems(sortType, name, brand, price, quantity);
             }
         });
 
@@ -76,25 +82,38 @@ public class InventoryListActivity extends AppCompatActivity implements Inventor
             @Override
             public void onClick(View v) {
                 name = search.getText().toString();
-                loadAllItems(sortType, name);
+                brand = brandTxt.getText().toString();
+                price = priceTxt.getText().toString().trim();
+                quantity = quantityTxt.getText().toString().trim();
+                loadAllItems(sortType, name, brand, price, quantity);
             }
         });
     }
 
-
-    private void loadAllItems(String sort, @Nullable String name) {
+    private void loadAllItems(String sort, @Nullable String name, @Nullable String brand, @Nullable String price, @Nullable String quantity) {
         itemList.clear();
+        Double priceDouble = -1.0;
+        int quantityInt = -1;
+
+        if(price != null && !price.isEmpty()) {
+            priceDouble = Double.parseDouble(price);
+        }
+
+        if(quantity != null && !quantity.isEmpty()) {
+            quantityInt = Integer.parseInt(quantity);
+        }
+
         List<String> itemTypes = Arrays.asList("Electronic", "Clothing", "Furniture");
         if (Objects.equals(sort, "All")) {
             for (String type : itemTypes) {
-               sortItems(type, name);
+               sortItems(type, name, brand, priceDouble, quantityInt);
             }
         }else {
-           sortItems(sort, name);
+           sortItems(sort, name, brand, priceDouble, quantityInt);
         }
     }
 
-    private void sortItems(String sortType, @Nullable String name) {
+    private void sortItems(String sortType, @Nullable String name, @Nullable String brand, @Nullable Double price, @Nullable Integer quantity) {
         com.google.firebase.firestore.Query query = db
                 .collection("Items")
                 .document(sortType)
@@ -104,11 +123,23 @@ public class InventoryListActivity extends AppCompatActivity implements Inventor
             query = query.whereEqualTo("name", name);
         }
 
+        if(brand != null && !brand.isEmpty()) {
+            query = query.whereEqualTo("brand", brand);
+        }
+
+        if(price != null && price != -1) {
+            query = query.whereLessThanOrEqualTo("price", price);
+            query = query.orderBy("price");
+        }
+
+        if(quantity != null && quantity != -1) {
+            query = query.whereLessThanOrEqualTo("quantity", quantity);
+            query = query.orderBy("quantity");
+        }
+
         query.get()
             .addOnSuccessListener(querySnapshot -> {
                 if (querySnapshot.isEmpty()) {
-                    itemList.clear();
-                    adapter.notifyDataSetChanged();
                     return;
                 }
 

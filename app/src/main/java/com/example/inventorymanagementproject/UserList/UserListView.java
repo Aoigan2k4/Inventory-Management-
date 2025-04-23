@@ -94,22 +94,6 @@ public class UserListView extends AppCompatActivity implements UserListAdapter.O
         }
     }
 
-//    private void sortUsers(String sortRole) {
-//        db.collection("Users").document(sortRole).collection(sortRole)
-//                .get()
-//                .addOnSuccessListener(querySnapshot -> {
-//                    for (DocumentSnapshot doc : querySnapshot.getDocuments()) {
-//                        User user = doc.toObject(User.class);
-//                        if (user != null) {
-//                            userList.add(user);
-//                        }
-//                        adapter.notifyDataSetChanged();
-//                    }
-//                })
-//                .addOnFailureListener(e -> {
-//                    Toast.makeText((UserListView.this), "Error loading users: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-//                });
-//    }
 
     private void sortUsersByName(String sortRole, @Nullable String name) {
         com.google.firebase.firestore.Query query = db.collection("Users")
@@ -123,8 +107,6 @@ public class UserListView extends AppCompatActivity implements UserListAdapter.O
         query.get()
         .addOnSuccessListener(querySnapshot -> {
             if (querySnapshot.isEmpty()) {
-                userList.clear();
-                adapter.notifyDataSetChanged();
                 return;
             }
 

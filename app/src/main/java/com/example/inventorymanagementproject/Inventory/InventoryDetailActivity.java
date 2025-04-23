@@ -68,9 +68,9 @@ public class InventoryDetailActivity extends AppCompatActivity {
                     if(item != null) {
                         editName.setText(item.getName());
                         editBrand.setText(item.getBrand());
-                        editPrice.setText(item.getPrice());
+                        editPrice.setText(String.valueOf(item.getPrice()));
                         editDesc.setText(item.getDesc());
-                        editQuantity.setText(item.getQuantity());
+                        editQuantity.setText(String.valueOf(item.getQuantity()));
                     }
                 }
             })
@@ -84,9 +84,9 @@ public class InventoryDetailActivity extends AppCompatActivity {
         item.setId(itemId);
         item.setName(editName.getText().toString().trim());
         item.setBrand(editBrand.getText().toString().trim());
-        item.setPrice(editPrice.getText().toString().trim());
+        item.setPrice(Double.parseDouble(editPrice.getText().toString().trim()));
         item.setDesc(editDesc.getText().toString().trim());
-        item.setQuantity(editQuantity.getText().toString().trim());
+        item.setQuantity(Integer.parseInt(editQuantity.getText().toString().trim()));
         item.setType(type);
 
         inventoryFacade.updateItem(item, new OnSuccessListener<Void>() {
@@ -116,15 +116,17 @@ public class InventoryDetailActivity extends AppCompatActivity {
         item.setId(itemId);
         item.setName(editName.getText().toString().trim());
         item.setBrand(editBrand.getText().toString().trim());
-        item.setPrice(editPrice.getText().toString().trim());
+        item.setPrice(Double.parseDouble(editPrice.getText().toString().trim()));
         item.setDesc(editDesc.getText().toString().trim());
-        item.setQuantity(editQuantity.getText().toString().trim());
+        item.setQuantity(Integer.parseInt(editQuantity.getText().toString().trim()));
         item.setType(type);
 
         inventoryFacade.deleteItem(item, new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Toast.makeText(InventoryDetailActivity.this, "Item deleted!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(InventoryDetailActivity.this, InventoryActivity.class);
+                startActivity(intent);
                 finish();
             }
         }, new OnFailureListener() {

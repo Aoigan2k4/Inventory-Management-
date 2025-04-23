@@ -9,7 +9,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
- * Facade for Inventory Management (Create, Read, Update, Delete).
+ * Facade for Inventory Management (Create, Update, Delete).
  */
 public class InventoryFacade {
     private final FirebaseFirestore db;

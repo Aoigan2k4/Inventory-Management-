@@ -5,8 +5,8 @@ public class Item {
     private String name;
     private String desc;
     private String brand;
-    private String price;
-    private String quantity;
+    private double price;
+    private int quantity;
     private String type;
 
     public String getType() {
@@ -49,19 +49,19 @@ public class Item {
         this.brand = brand;
     }
 
-    public String getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
-    public String getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(String quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 }

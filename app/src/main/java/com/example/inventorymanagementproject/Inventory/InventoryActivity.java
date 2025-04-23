@@ -1,5 +1,6 @@
 package com.example.inventorymanagementproject.Inventory;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +17,8 @@ import com.example.inventorymanagementproject.Builder.Engineer;
 import com.example.inventorymanagementproject.Builder.Item;
 import com.example.inventorymanagementproject.Facade.InventoryFacade;
 import com.example.inventorymanagementproject.R;
+import com.example.inventorymanagementproject.UserList.UserListDetail;
+import com.example.inventorymanagementproject.UserList.UserListView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
@@ -68,21 +71,21 @@ public class InventoryActivity extends AppCompatActivity {
         edit.setVisibility(View.VISIBLE);
     }
 
-    private Item createElectronic(String id, String name, String brand, String price, String desc, String quantity, String itemType) {
+    private Item createElectronic(String id, String name, String brand, Double price, String desc, int quantity, String itemType) {
         AbstractItem electronicFactory = AbstractItem.itemEnum(Type.Electronic);
         Engineer engineer = new Engineer(electronicFactory.buildElectronic());
         engineer.BuildItem(id, name, brand, price, desc, quantity, itemType);
         return engineer.getItems();
     }
 
-    private Item createClothing(String id, String name, String brand, String price, String desc, String quantity, String itemType) {
+    private Item createClothing(String id, String name, String brand, Double price, String desc, int quantity, String itemType) {
         AbstractItem clothingFactory = AbstractItem.itemEnum(Type.Clothing);
         Engineer engineer = new Engineer(clothingFactory.buildClothing());
         engineer.BuildItem(id, name, brand, price, desc, quantity, itemType);
         return engineer.getItems();
     }
 
-    private Item createFurniture(String id, String name, String brand, String price, String desc, String quantity, String itemType) {
+    private Item createFurniture(String id, String name, String brand, Double price, String desc, int quantity, String itemType) {
         AbstractItem furnitureFactory = AbstractItem.itemEnum(Type.Furniture);
         Engineer engineer = new Engineer(furnitureFactory.buildFurniture());
         engineer.BuildItem(id, name, brand, price, desc, quantity, itemType);
@@ -103,15 +106,18 @@ public class InventoryActivity extends AppCompatActivity {
             return;
         }
 
+        Double priceDouble = Double.parseDouble(price);
+        int quantityInt = Integer.parseInt(quantity);
+
         switch (itemType) {
             case "Electronic":
-                newItem = createElectronic(id, name, brand, price, desc, quantity, itemType);
+                newItem = createElectronic(id, name, brand, priceDouble, desc, quantityInt, itemType);
                 break;
             case "Clothing":
-                newItem = createClothing(id, name, brand, price, desc, quantity, itemType);
+                newItem = createClothing(id, name, brand, priceDouble, desc, quantityInt, itemType);
                 break;
             case "Furniture":
-                newItem = createFurniture(id, name, brand, price, desc, quantity, itemType);
+                newItem = createFurniture(id, name, brand, priceDouble, desc, quantityInt, itemType);
                 break;
         }
 
@@ -122,7 +128,10 @@ public class InventoryActivity extends AppCompatActivity {
                 public void onSuccess(Void aVoid) {
                     Toast.makeText(InventoryActivity.this, "Item created successfully", Toast.LENGTH_SHORT).show();
                     clearFields();
+                    Intent intent = new Intent(InventoryActivity.this, InventoryListActivity.class);
+                    startActivity(intent);
                     finish();
+
                 }
             }, new OnFailureListener() {
                 @Override

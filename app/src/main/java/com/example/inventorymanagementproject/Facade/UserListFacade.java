@@ -11,7 +11,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class UserListFacade {
 /**
- * Facade for User Management (Read, Update).
+ * Facade for User Management (Read, Delete).
  */
     private final FirebaseFirestore db;
     public UserListFacade() {

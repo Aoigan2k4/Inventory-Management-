@@ -24,7 +24,7 @@ public class ElectronicBuilder implements IBuilder {
     }
 
     @Override
-    public void SetPrice(String price) {
+    public void SetPrice(Double price) {
         this.item.setPrice(price);
     }
 
@@ -34,7 +34,7 @@ public class ElectronicBuilder implements IBuilder {
     }
 
     @Override
-    public void SetQuantity(String quantity) {
+    public void SetQuantity(int quantity) {
         this.item.setQuantity(quantity);
     }
 
