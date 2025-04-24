@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.inventorymanagementproject.Dashboard;
 import com.example.inventorymanagementproject.Inventory.InventoryDetailActivity;
 import com.example.inventorymanagementproject.Inventory.InventoryListActivity;
 import com.example.inventorymanagementproject.R;
@@ -38,6 +39,7 @@ public class UserListView extends AppCompatActivity implements UserListAdapter.O
     private String sortRole;
     private EditText search;
     private Button btnSearch;
+    private View touchZone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,8 @@ public class UserListView extends AppCompatActivity implements UserListAdapter.O
         spinner = findViewById(R.id.spinner);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        touchZone = findViewById(R.id.touchZone);
+
         userList = new ArrayList<>();
         adapter = new UserListAdapter(userList, this);
         btnSearch = findViewById(R.id.searchBtn);
@@ -71,6 +75,12 @@ public class UserListView extends AppCompatActivity implements UserListAdapter.O
                 sortRole = parent.getItemAtPosition(0).toString();
                 loadAllUsers(sortRole, name);
             }
+        });
+
+        touchZone.setOnClickListener(v-> {
+            Intent intent = new Intent(UserListView.this, Dashboard.class);
+            startActivity(intent);
+            finish();
         });
 
         btnSearch.setOnClickListener(new View.OnClickListener() {

@@ -1,10 +1,9 @@
 package com.example.inventorymanagementproject;
 
-import static android.content.ContentValues.TAG;
-
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -14,11 +13,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.inventorymanagementproject.FirebaseManager;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseAuthInvalidUserException;
-import com.google.firebase.auth.FirebaseUser;
+import com.example.inventorymanagementproject.COR.FirebaseLogInHandler;
+import com.example.inventorymanagementproject.COR.InputCheckHandler;
+import com.example.inventorymanagementproject.COR.ValidationHandler;
+import com.example.inventorymanagementproject.COR.ValidationInterface;
+import com.example.inventorymanagementproject.COR.ValidationManager;
 
 public class LogIn extends AppCompatActivity {
 
@@ -53,16 +52,48 @@ public class LogIn extends AppCompatActivity {
         String email = emailTxt.getText().toString().trim();
         String password = passTxt.getText().toString().trim();
         int selectedRoleId = roles.getCheckedRadioButtonId();
+        Context context = this;
+        mng = FirebaseManager.getInstance();
 
         if (selectedRoleId == -1) {
             Toast.makeText(LogIn.this, "Please select a role.", Toast.LENGTH_SHORT).show();
             return;
         }
+
         RadioButton selectedRoleButton = findViewById(selectedRoleId);
         String role = selectedRoleButton.getText().toString();
 
-        mng = FirebaseManager.getInstance();
-        mng.LogInUser(this, email, password, role);
+        ValidationManager request = new ValidationManager(email, password, role);
+        request.email = email;
+        request.password = password;
+        request.role = role;
+
+        ValidationHandler inputCheck = new InputCheckHandler();
+        ValidationHandler fbHandler = new FirebaseLogInHandler();
+
+        inputCheck.setNext(fbHandler);
+
+        inputCheck.handle(context, request, mng, new ValidationInterface() {
+            @Override
+            public void onSuccess(String message) {}
+
+            @Override
+            public void onFailure(String error) {
+                Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        SharedPreferences prefs = getSharedPreferences("roles", Context.MODE_PRIVATE);
+        prefs.edit().putString("role", role).apply();
+
+        if (role.equals("Admin")) {
+            prefs.edit().putString("email", email).apply();
+            prefs.edit().putString("password", password).apply();
+        }
+        else {
+            prefs.edit().putString("email", null).apply();
+            prefs.edit().putString("password", null).apply();
+        }
     }
 
     private void signUp() {

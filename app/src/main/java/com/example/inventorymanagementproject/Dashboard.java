@@ -1,6 +1,8 @@
 package com.example.inventorymanagementproject;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
@@ -25,6 +27,7 @@ public class Dashboard extends AppCompatActivity {
     RoleAuthorization authorization;
     Intent intent;
     TextView greetings;
+    Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,13 +49,16 @@ public class Dashboard extends AppCompatActivity {
 
         mng = FirebaseManager.getInstance();
         mAuth = mng.getAuth();
-
         intent = getIntent();
-        role = intent.getStringExtra("role");
+
+        SharedPreferences prefs = context.getSharedPreferences("roles", Context.MODE_PRIVATE);
+        role = prefs.getString("role", null);
         greetings.setText("Welcome " + role + ", " + mAuth.getCurrentUser().getDisplayName());
 
-        password = intent.getStringExtra("password") == null ? "" : intent.getStringExtra("password");
-        email = intent.getStringExtra("email") == null ? "" : intent.getStringExtra("email");
+        if ("Admin".equals(role)) {
+            email = prefs.getString("email", null);
+            password = prefs.getString("password", null);
+        }
 
         assert role != null;
         if (role.equals("Admin")) {

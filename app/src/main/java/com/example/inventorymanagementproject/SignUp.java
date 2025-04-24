@@ -1,12 +1,15 @@
 package com.example.inventorymanagementproject;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -36,6 +39,11 @@ public class SignUp extends AppCompatActivity {
         String username = usernameTxt.getText().toString().trim();
         String email = emailTxt.getText().toString().trim();
         String password = passTxt.getText().toString().trim();
+
+        if (username.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(SignUp.this, "Please fill in all fields.", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         mng = FirebaseManager.getInstance();
         mng.CreateUser(this, "Client", password, username, email, "", "", false);

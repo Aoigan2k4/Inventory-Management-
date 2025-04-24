@@ -2,6 +2,8 @@ package com.example.inventorymanagementproject.Inventory;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.inventorymanagementproject.Builder.Item;
+import com.example.inventorymanagementproject.Dashboard;
 import com.example.inventorymanagementproject.R;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -36,6 +39,7 @@ public class InventoryListActivity extends AppCompatActivity implements Inventor
     private EditText search, brandTxt, priceTxt, quantityTxt;
     private Button btnSearch;
     private String name, brand, price, quantity;
+    private View touchZone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -55,11 +59,19 @@ public class InventoryListActivity extends AppCompatActivity implements Inventor
         priceTxt = findViewById(R.id.Price);
         quantityTxt = findViewById(R.id.Quantity);
         btnSearch = findViewById(R.id.searchBtn);
+        touchZone = findViewById(R.id.touchZone);
 
         name = search.getText().toString();
         brand = brandTxt.getText().toString();
         price = priceTxt.getText().toString().trim();
         quantity = quantityTxt.getText().toString().trim();
+
+        touchZone.setOnClickListener(v-> {
+            Intent intent = new Intent(InventoryListActivity.this, Dashboard.class);
+            startActivity(intent);
+            finish();
+        });
+
 
         List<String> itemTypes = Arrays.asList("All", "Electronic", "Clothing", "Furniture");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, itemTypes);

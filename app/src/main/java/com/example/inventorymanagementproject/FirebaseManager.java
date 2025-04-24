@@ -5,6 +5,7 @@ import static android.content.ContentValues.TAG;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -73,11 +74,6 @@ public class FirebaseManager {
                                         }
                                         else {
                                             Intent intent = new Intent(context, Dashboard.class);
-                                            intent.putExtra("role", role);
-                                            if (role.equals("Admin")) {
-                                                intent.putExtra("email", email);
-                                                intent.putExtra("password", password);
-                                            }
                                             ((Activity) context).startActivity(intent);
                                         }
                                     })
@@ -91,7 +87,7 @@ public class FirebaseManager {
                 });
     }
 
-    void LogInUser(Context context, String email, String password, String role){
+    public void LogInUser(Context context, String email, String password, String role){
         var query = db.collection("Users")
                 .document(role)
                 .collection(role)
@@ -118,11 +114,6 @@ public class FirebaseManager {
                                     loggedInUser.updateProfile(profileUpdates);
 
                                     Intent intent = new Intent(context, Dashboard.class);
-                                    intent.putExtra("role", role);
-                                    if (role.equals("Admin")) {
-                                        intent.putExtra("email", email);
-                                        intent.putExtra("password", password);
-                                    }
                                     ((Activity) context).startActivity(intent);
                                 } else {
                                     Exception exception = task.getException();

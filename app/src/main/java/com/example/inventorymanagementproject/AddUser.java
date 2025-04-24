@@ -1,6 +1,8 @@
 package com.example.inventorymanagementproject;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -58,6 +60,7 @@ public class AddUser extends AppCompatActivity {
             RadioButton selectedRadioButton = findViewById(selectedRoleId);
             selectedRole = selectedRadioButton.getText().toString();
         }
+
         if (adminPass != null && adminEmail != null) {
             mng = FirebaseManager.getInstance();
             mng.CreateUser(this, selectedRole, password, username, email, adminPass, adminEmail, true);
