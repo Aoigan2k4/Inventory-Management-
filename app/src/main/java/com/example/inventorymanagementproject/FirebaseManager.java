@@ -42,7 +42,7 @@ public class FirebaseManager {
         return db;
     }
 
-    void CreateUser(Context context, String role, String password, String username, String email, String adminPassword, String adminEmail, Boolean isAdmin) {
+    void CreateUser(Context context, String role, String password, String username, String email, String adminPassword, String adminUsername, Boolean isAdmin) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener( task -> {
                     if (task.isSuccessful()) {
@@ -70,7 +70,7 @@ public class FirebaseManager {
                                         Toast.makeText(context, "User created!", Toast.LENGTH_SHORT).show();
                                         if (isAdmin) {
                                             mAuth.signOut();
-                                            LogInUser(context, adminEmail, adminPassword, "Admin");
+                                            LogInUser(context, adminUsername, adminPassword, "Admin");
                                         }
                                         else {
                                             Intent intent = new Intent(context, Dashboard.class);
@@ -87,18 +87,19 @@ public class FirebaseManager {
                 });
     }
 
-    public void LogInUser(Context context, String email, String password, String role){
+    public void LogInUser(Context context, String username, String password, String role){
         var query = db.collection("Users")
                 .document(role)
                 .collection(role)
-                .whereEqualTo("email", email)
+                .whereEqualTo("username", username)
                 .get();
 
         query.addOnSuccessListener(querySnapshot -> {
             if (!querySnapshot.isEmpty()) {
                 DocumentSnapshot userDoc = querySnapshot.getDocuments().get(0);
-                String username = userDoc.getString("username");
+                String email = userDoc.getString("email");
 
+                assert email != null;
                 if (!email.isEmpty() && !password.isEmpty() && !role.isEmpty()) {
                     mAuth.signInWithEmailAndPassword(email, password)
                             .addOnCompleteListener( task -> {
@@ -122,6 +123,7 @@ public class FirebaseManager {
                                         Toast.makeText(context, "Invalid email or password.", Toast.LENGTH_SHORT).show();
                                     } else if (exception instanceof FirebaseAuthInvalidUserException) {
                                         Toast.makeText(context, "User not found.", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(context, email + username + password + role, Toast.LENGTH_SHORT).show();
                                     } else {
                                         Toast.makeText(context, "Authentication failed.", Toast.LENGTH_SHORT).show();
                                     }
@@ -134,41 +136,5 @@ public class FirebaseManager {
                Toast.makeText(context, "User not found", Toast.LENGTH_SHORT).show();
             }
         });
-
-//        if (!email.isEmpty() && !password.isEmpty() && !role.isEmpty()) {
-//            mAuth.signInWithEmailAndPassword(email, password)
-//                    .addOnCompleteListener( task -> {
-//                        if (task.isSuccessful()) {
-//                            FirebaseUser loggedInUser = mAuth.getCurrentUser();
-//
-//                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest
-//                                    .Builder()
-//                                    .setDisplayName(username)
-//                                    .build();
-//
-//                            user.updateProfile(profileUpdates);
-//
-//                            Intent intent = new Intent(context, Dashboard.class);
-//                            intent.putExtra("role", role);
-//                            if (role.equals("Admin")) {
-//                                intent.putExtra("email", email);
-//                                intent.putExtra("password", password);
-//                            }
-//                            ((Activity) context).startActivity(intent);
-//                        } else {
-//                            Exception exception = task.getException();
-//                            Log.w(TAG, "signInWithEmail:failure", exception);
-//                            if (exception instanceof FirebaseAuthInvalidCredentialsException) {
-//                                Toast.makeText(context, "Invalid email or password.", Toast.LENGTH_SHORT).show();
-//                            } else if (exception instanceof FirebaseAuthInvalidUserException) {
-//                                Toast.makeText(context, "User not found.", Toast.LENGTH_SHORT).show();
-//                            } else {
-//                                Toast.makeText(context, "Authentication failed.", Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//                    });
-//        } else {
-//            Toast.makeText(context, "Authentication failed.", Toast.LENGTH_SHORT).show();
-//        }
     }
 }

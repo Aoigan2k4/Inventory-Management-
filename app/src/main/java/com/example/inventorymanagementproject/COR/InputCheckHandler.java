@@ -8,7 +8,7 @@ public class InputCheckHandler extends ValidationHandler {
 
     @Override
     public void handle(Context context, ValidationManager request, FirebaseManager mng, ValidationInterface results) {
-        if (request.email.isEmpty() || request.password.isEmpty()) {
+        if (request.username.isEmpty() || request.password.isEmpty()) {
             results.onFailure("Email or password cannot be empty.");
         } else if (nextHandler != null) {
             nextHandler.handle(context,request, mng, results);

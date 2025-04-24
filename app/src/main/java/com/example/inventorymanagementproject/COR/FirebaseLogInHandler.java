@@ -7,6 +7,6 @@ public class FirebaseLogInHandler extends ValidationHandler {
 
     @Override
     public void handle(Context context, ValidationManager request, FirebaseManager mng, ValidationInterface callback) {
-        mng.LogInUser(context, request.email, request.password, request.role);
+        mng.LogInUser(context, request.username, request.password, request.role);
     }
 }

@@ -23,7 +23,7 @@ public class AddUser extends AppCompatActivity {
     RadioGroup roles;
     RadioButton admin, staff, client;
     FirebaseManager mng;
-    String adminPass, adminEmail;
+    String adminPass, adminUsername;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +39,9 @@ public class AddUser extends AppCompatActivity {
         staff = findViewById(R.id.staffRadioButton);
         client = findViewById(R.id.clientRadioButton);
 
-        Intent intent = getIntent();
-        adminEmail = intent.getStringExtra("email");
-        adminPass = intent.getStringExtra("password");
+        SharedPreferences prefs = getSharedPreferences("roles", Context.MODE_PRIVATE);
+        adminUsername = prefs.getString("username", null);
+        adminPass = prefs.getString("password", null);
 
         signUpBtn.setOnClickListener(v -> SignUpBtn());
     }
@@ -61,9 +61,9 @@ public class AddUser extends AppCompatActivity {
             selectedRole = selectedRadioButton.getText().toString();
         }
 
-        if (adminPass != null && adminEmail != null) {
+        if (adminPass != null && adminUsername != null) {
             mng = FirebaseManager.getInstance();
-            mng.CreateUser(this, selectedRole, password, username, email, adminPass, adminEmail, true);
+            mng.CreateUser(this, selectedRole, password, username, email, adminPass, adminUsername, true);
         }
         else {
             Toast.makeText(AddUser.this, "Admin credentials not found.", Toast.LENGTH_SHORT).show();

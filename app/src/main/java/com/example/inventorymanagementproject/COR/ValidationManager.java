@@ -1,14 +1,12 @@
 package com.example.inventorymanagementproject.COR;
 
 public class ValidationManager {
-    String id;
-    String username;
-    public String email;
+    public String username;
     public String password;
     public String role;
 
-    public ValidationManager(String email, String password,  String role){
-        this.email = email;
+    public ValidationManager(String username, String password,  String role){
+        this.username = username;
         this.password = password;
         this.role = role;
     }

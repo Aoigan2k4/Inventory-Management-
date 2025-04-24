@@ -101,12 +101,21 @@
             android:text="UPDATE"
             android:backgroundTint="@color/darkBlue"
             android:layout_marginBottom="16dp"/>
+
         <Button
             android:id="@+id/btnDelete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="DELETE"
             android:backgroundTint="@color/red"
+            android:layout_marginBottom="16dp"/>
+
+        <Button
+            android:id="@+id/btnOrder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ORDER"
+            android:backgroundTint="@color/blue"
             android:layout_marginBottom="16dp"/>
 
         <Button

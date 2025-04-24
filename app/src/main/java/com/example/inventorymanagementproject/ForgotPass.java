@@ -1,8 +1,10 @@
 package com.example.inventorymanagementproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,6 +33,21 @@ public class ForgotPass extends AppCompatActivity {
     private void sendEmail() {
         String email = emailTxt.getText().toString().trim();
         mng = FirebaseManager.getInstance();
+
+        if (email.isEmpty()) {
+            Toast.makeText(this, "Please enter email address", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if (!email.contains("@")) {
+            Toast.makeText(this, "Please enter valid email address", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         mng.getAuth().sendPasswordResetEmail(email);
+        Toast.makeText(this, "Email sent to this address "  + email, Toast.LENGTH_LONG).show();
+
+        Intent intent = new Intent(this, LogIn.class);
+        startActivity(intent);
     }
 }

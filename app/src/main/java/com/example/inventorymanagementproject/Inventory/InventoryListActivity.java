@@ -50,11 +50,13 @@ public class InventoryListActivity extends AppCompatActivity implements Inventor
         spinner = findViewById(R.id.spinner);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         itemList = new ArrayList<>();
         adapter = new InventoryAdapter(itemList, this);
         recyclerView.setAdapter(adapter);
         db = FirebaseFirestore.getInstance();
         search = findViewById(R.id.ItemName);
+
         brandTxt = findViewById(R.id.Brand);
         priceTxt = findViewById(R.id.Price);
         quantityTxt = findViewById(R.id.Quantity);

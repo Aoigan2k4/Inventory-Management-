@@ -13,8 +13,11 @@ public abstract class RoleAuthorization {
     }
 
     private void CommonRoles(Activity activity) {
-        activity.findViewById(R.id.ViewInventory).setVisibility(View.VISIBLE);
-        activity.findViewById(R.id.LogOut).setVisibility(View.VISIBLE);
+        View viewInventory = activity.findViewById(R.id.ViewInventory);
+        if (viewInventory != null) viewInventory.setVisibility(View.VISIBLE);
+
+        View logOut = activity.findViewById(R.id.LogOut);
+        if (logOut != null) logOut.setVisibility(View.VISIBLE);
     }
 
     protected abstract void SpecificRoles(String role, Activity activity);

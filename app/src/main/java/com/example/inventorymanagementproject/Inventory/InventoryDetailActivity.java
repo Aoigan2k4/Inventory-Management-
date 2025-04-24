@@ -1,6 +1,8 @@
 package com.example.inventorymanagementproject.Inventory;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +16,10 @@ import com.example.inventorymanagementproject.Builder.Item;
 import com.example.inventorymanagementproject.Facade.InventoryFacade;
 import com.example.inventorymanagementproject.FirebaseManager;
 import com.example.inventorymanagementproject.R;
+import com.example.inventorymanagementproject.TemplateMethod.AdminAuthorization;
+import com.example.inventorymanagementproject.TemplateMethod.ClientAuthorization;
+import com.example.inventorymanagementproject.TemplateMethod.RoleAuthorization;
+import com.example.inventorymanagementproject.TemplateMethod.StaffAuthorization;
 import com.example.inventorymanagementproject.UserList.UserListDetail;
 import com.example.inventorymanagementproject.UserList.UserListView;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -23,11 +29,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class InventoryDetailActivity extends AppCompatActivity {
 
     private EditText editName, editBrand, editPrice, editDesc, editQuantity;
-    private Button btnUpdate, btnDelete, btnBack;
+    private Button btnUpdate, btnDelete, btnBack, btnOrder;
     private InventoryFacade inventoryFacade;
     private FirebaseFirestore db;
     private FirebaseManager mng;
     private String itemId, type;
+    private final Context context = this;
+    private String role;
+    private RoleAuthorization authorization;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +51,7 @@ public class InventoryDetailActivity extends AppCompatActivity {
         btnUpdate = findViewById(R.id.btnUpdate);
         btnDelete = findViewById(R.id.btnDelete);
         btnBack = findViewById(R.id.btnBack);
+        btnOrder = findViewById(R.id.btnOrder);
 
         inventoryFacade = new InventoryFacade();
         mng = FirebaseManager.getInstance();
@@ -53,6 +63,20 @@ public class InventoryDetailActivity extends AppCompatActivity {
         if(itemId != null) {
             loadItem(itemId);
         }
+
+        SharedPreferences prefs = context.getSharedPreferences("roles", Context.MODE_PRIVATE);
+        role = prefs.getString("role", null);
+
+        assert role != null;
+        if (role.equals("Admin")) {
+            authorization = new AdminAuthorization();
+        } else if (role.equals("Staff")) {
+            authorization = new StaffAuthorization();
+        } else {
+            authorization = new ClientAuthorization();
+        }
+
+        authorization.ConfigureAuth(role, this);
 
         btnUpdate.setOnClickListener(v-> updateItem());
         btnDelete.setOnClickListener(v-> deleteItem());

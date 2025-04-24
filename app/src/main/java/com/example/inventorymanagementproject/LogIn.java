@@ -21,7 +21,7 @@ import com.example.inventorymanagementproject.COR.ValidationManager;
 
 public class LogIn extends AppCompatActivity {
 
-    EditText emailTxt, passTxt;
+    EditText usernameTxt, passTxt;
     RadioGroup roles;
     RadioButton admin, staff, client;
     Button loginBtn;
@@ -33,7 +33,7 @@ public class LogIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
 
-        emailTxt = findViewById(R.id.emailTxt);
+        usernameTxt = findViewById(R.id.usernameTxt);
         passTxt = findViewById(R.id.passwordTxt);
         loginBtn = findViewById(R.id.loginButton);
         signUp = findViewById(R.id.signUpLink);
@@ -49,7 +49,7 @@ public class LogIn extends AppCompatActivity {
     }
 
     private void LogInBtn() {
-        String email = emailTxt.getText().toString().trim();
+        String username = usernameTxt.getText().toString().trim();
         String password = passTxt.getText().toString().trim();
         int selectedRoleId = roles.getCheckedRadioButtonId();
         Context context = this;
@@ -63,8 +63,8 @@ public class LogIn extends AppCompatActivity {
         RadioButton selectedRoleButton = findViewById(selectedRoleId);
         String role = selectedRoleButton.getText().toString();
 
-        ValidationManager request = new ValidationManager(email, password, role);
-        request.email = email;
+        ValidationManager request = new ValidationManager(username, password, role);
+        request.username = username;
         request.password = password;
         request.role = role;
 
@@ -87,11 +87,11 @@ public class LogIn extends AppCompatActivity {
         prefs.edit().putString("role", role).apply();
 
         if (role.equals("Admin")) {
-            prefs.edit().putString("email", email).apply();
+            prefs.edit().putString("username", username).apply();
             prefs.edit().putString("password", password).apply();
         }
         else {
-            prefs.edit().putString("email", null).apply();
+            prefs.edit().putString("username", null).apply();
             prefs.edit().putString("password", null).apply();
         }
     }

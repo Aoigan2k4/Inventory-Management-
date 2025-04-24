@@ -23,7 +23,7 @@ public class Dashboard extends AppCompatActivity {
     Button view, add, logout, adduser, viewusers;
     FirebaseManager mng;
     FirebaseAuth mAuth;
-    String role, password, email;
+    String role, password, username;
     RoleAuthorization authorization;
     Intent intent;
     TextView greetings;
@@ -56,7 +56,7 @@ public class Dashboard extends AppCompatActivity {
         greetings.setText("Welcome " + role + ", " + mAuth.getCurrentUser().getDisplayName());
 
         if ("Admin".equals(role)) {
-            email = prefs.getString("email", null);
+            username = prefs.getString("username", null);
             password = prefs.getString("password", null);
         }
 
@@ -92,8 +92,6 @@ public class Dashboard extends AppCompatActivity {
 
     private void AddUser() {
         Intent intent = new Intent(Dashboard.this, AddUser.class);
-        intent.putExtra("email", email);
-        intent.putExtra("password", password);
         startActivity(intent);
     }
 
