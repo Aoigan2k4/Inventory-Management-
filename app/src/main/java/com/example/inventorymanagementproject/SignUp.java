@@ -44,6 +44,16 @@ public class SignUp extends AppCompatActivity {
             Toast.makeText(SignUp.this, "Please fill in all fields.", Toast.LENGTH_SHORT).show();
             return;
         }
+        if (!email.contains("@")) {
+            Toast.makeText(this, "Please enter valid email address", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+
+        if (password.length() < 6) {
+            Toast.makeText(this, "Password must be at least 8 characters long", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         mng = FirebaseManager.getInstance();
         mng.CreateUser(this, "Client", password, username, email, "", "", false);

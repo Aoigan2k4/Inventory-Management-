@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -18,6 +19,7 @@ public class ForgotPass extends AppCompatActivity {
     EditText emailTxt;
     Button sendEmailBtn;
     FirebaseManager mng;
+    ImageView xBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +27,14 @@ public class ForgotPass extends AppCompatActivity {
         setContentView(R.layout.activity_forgot_pass);
 
         emailTxt = findViewById(R.id.emailTxt);
-        sendEmailBtn = findViewById(R.id.sendButton);
+        sendEmailBtn = findViewById(R.id.sendBtn);
+        xBtn = findViewById(R.id.btnClose);
 
+        xBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(this, LogIn.class);
+            startActivity(intent);
+            finish();
+        });
         sendEmailBtn.setOnClickListener(v -> sendEmail());
     }
 

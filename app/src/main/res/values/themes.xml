@@ -6,4 +6,10 @@
     </style>
 
     <style name="Theme.InventoryManagementProject" parent="Base.Theme.InventoryManagementProject" />
+
+    <style name="DialogStyle" parent="Theme.AppCompat.Dialog">
+        <item name="windowMinWidthMajor">100%</item>
+        <item name="windowMinWidthMinor">100%</item>
+    </style>
+
 </resources>

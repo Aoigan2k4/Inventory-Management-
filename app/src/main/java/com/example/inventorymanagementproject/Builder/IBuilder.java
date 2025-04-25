@@ -8,5 +8,6 @@ public interface IBuilder {
     void SetDesc(String desc);
     void SetQuantity(int quantity);
     void SetType(String type);
+    void SetStatus(String state);
     Item getItem();
 }

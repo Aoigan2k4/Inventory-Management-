@@ -37,8 +37,8 @@ public class InventoryListActivity extends AppCompatActivity implements Inventor
     private Spinner spinner;
     private String sortType;
     private EditText search, brandTxt, priceTxt, quantityTxt;
-    private Button btnSearch;
-    private String name, brand, price, quantity;
+    private Button btnSearch ;
+    private String name, brand, price, quantity, state;
     private View touchZone;
 
     @Override

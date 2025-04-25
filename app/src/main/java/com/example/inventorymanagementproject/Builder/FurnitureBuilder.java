@@ -32,6 +32,10 @@ public class FurnitureBuilder implements IBuilder{
         this.item.setDesc(desc);
     }
 
+    public void SetStatus(String status) {
+        this.item.setStatus(status);
+    }
+
     @Override
     public void SetQuantity(int quantity) {
         this.item.setQuantity(quantity);

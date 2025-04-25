@@ -46,7 +46,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.Item
     }
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
-        TextView Name, Brand, Price, Quantity;
+        TextView Name, Brand, Price, Quantity, Status;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -54,6 +54,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.Item
             Brand = itemView.findViewById(R.id.brand);
             Price = itemView.findViewById(R.id.price);
             Quantity = itemView.findViewById(R.id.quantity);
+            Status = itemView.findViewById(R.id.status);
         }
 
         public void bind(Item item, OnItemClickListener listener) {
@@ -61,6 +62,8 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.Item
             Brand.setText("Brand: " + item.getBrand());
             Price.setText("Price: $" + item.getPrice());
             Quantity.setText("Quantity in Stock: " + item.getQuantity());
+            Status.setText("Availability: " + item.getStatus());
+
             itemView.setOnClickListener(v -> listener.onItemClick(item));
         }
     }

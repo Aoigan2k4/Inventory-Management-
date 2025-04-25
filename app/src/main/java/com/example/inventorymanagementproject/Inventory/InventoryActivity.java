@@ -74,21 +74,21 @@ public class InventoryActivity extends AppCompatActivity {
     private Item createElectronic(String id, String name, String brand, Double price, String desc, int quantity, String itemType) {
         AbstractItem electronicFactory = AbstractItem.itemEnum(Type.Electronic);
         Engineer engineer = new Engineer(electronicFactory.buildElectronic());
-        engineer.BuildItem(id, name, brand, price, desc, quantity, itemType);
+        engineer.BuildItem(id, name, brand, price, desc, quantity, itemType, "Available");
         return engineer.getItems();
     }
 
     private Item createClothing(String id, String name, String brand, Double price, String desc, int quantity, String itemType) {
         AbstractItem clothingFactory = AbstractItem.itemEnum(Type.Clothing);
         Engineer engineer = new Engineer(clothingFactory.buildClothing());
-        engineer.BuildItem(id, name, brand, price, desc, quantity, itemType);
+        engineer.BuildItem(id, name, brand, price, desc, quantity, itemType, "Available");
         return engineer.getItems();
     }
 
     private Item createFurniture(String id, String name, String brand, Double price, String desc, int quantity, String itemType) {
         AbstractItem furnitureFactory = AbstractItem.itemEnum(Type.Furniture);
         Engineer engineer = new Engineer(furnitureFactory.buildFurniture());
-        engineer.BuildItem(id, name, brand, price, desc, quantity, itemType);
+        engineer.BuildItem(id, name, brand, price, desc, quantity, itemType, "Available");
         return engineer.getItems();
     }
 
@@ -103,6 +103,16 @@ public class InventoryActivity extends AppCompatActivity {
         if (name.isEmpty() || brand.isEmpty() || price.isEmpty() ||
                 desc.isEmpty() || quantity.isEmpty()) {
             Toast.makeText(this, "Please fill out all fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(quantity.equals("0")) {
+            Toast.makeText(this, "Quantity cannot be 0", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(price.equals("0")) {
+            Toast.makeText(this, "Price cannot be 0", Toast.LENGTH_SHORT).show();
             return;
         }
 

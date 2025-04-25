@@ -43,6 +43,10 @@ public class ElectronicBuilder implements IBuilder {
         this.item.setType(type);
     }
 
+    public void SetStatus(String status) {
+        this.item.setStatus(status);
+    }
+
     @Override
     public Item getItem() {
         return item;

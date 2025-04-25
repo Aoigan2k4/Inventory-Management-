@@ -44,6 +44,10 @@ public class ClothingBuilder implements IBuilder{
     }
 
     @Override
+    public void SetStatus(String status) {
+        this.item.setStatus(status);
+    }
+
     public Item getItem() {
         return item;
     }

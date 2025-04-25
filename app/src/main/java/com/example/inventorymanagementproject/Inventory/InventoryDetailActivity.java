@@ -1,5 +1,6 @@
 package com.example.inventorymanagementproject.Inventory;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.inventorymanagementproject.Builder.Item;
 import com.example.inventorymanagementproject.Facade.InventoryFacade;
 import com.example.inventorymanagementproject.FirebaseManager;
+import com.example.inventorymanagementproject.OrderDialog;
 import com.example.inventorymanagementproject.R;
 import com.example.inventorymanagementproject.TemplateMethod.AdminAuthorization;
 import com.example.inventorymanagementproject.TemplateMethod.ClientAuthorization;
@@ -26,9 +28,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Objects;
+
 public class InventoryDetailActivity extends AppCompatActivity {
 
-    private EditText editName, editBrand, editPrice, editDesc, editQuantity;
+    private EditText editName, editBrand, editPrice, editDesc, editQuantity,statusTxt;
     private Button btnUpdate, btnDelete, btnBack, btnOrder;
     private InventoryFacade inventoryFacade;
     private FirebaseFirestore db;
@@ -48,6 +52,7 @@ public class InventoryDetailActivity extends AppCompatActivity {
         editPrice = findViewById(R.id.editItemPrice);
         editDesc = findViewById(R.id.editItemDesc);
         editQuantity = findViewById(R.id.editItemQuantity);
+        statusTxt = findViewById(R.id.editItemStatus);
         btnUpdate = findViewById(R.id.btnUpdate);
         btnDelete = findViewById(R.id.btnDelete);
         btnBack = findViewById(R.id.btnBack);
@@ -81,6 +86,7 @@ public class InventoryDetailActivity extends AppCompatActivity {
         btnUpdate.setOnClickListener(v-> updateItem());
         btnDelete.setOnClickListener(v-> deleteItem());
         btnBack.setOnClickListener(v-> back());
+        btnOrder.setOnClickListener(v-> orderItem(itemId));
     }
 
     private void loadItem(String itemId) {
@@ -95,6 +101,7 @@ public class InventoryDetailActivity extends AppCompatActivity {
                         editPrice.setText(String.valueOf(item.getPrice()));
                         editDesc.setText(item.getDesc());
                         editQuantity.setText(String.valueOf(item.getQuantity()));
+                        statusTxt.setText(item.getStatus());
                     }
                 }
             })
@@ -112,6 +119,7 @@ public class InventoryDetailActivity extends AppCompatActivity {
         item.setDesc(editDesc.getText().toString().trim());
         item.setQuantity(Integer.parseInt(editQuantity.getText().toString().trim()));
         item.setType(type);
+        item.setStatus(statusTxt.getText().toString().trim());
 
         inventoryFacade.updateItem(item, new OnSuccessListener<Void>() {
             @Override
@@ -144,6 +152,7 @@ public class InventoryDetailActivity extends AppCompatActivity {
         item.setDesc(editDesc.getText().toString().trim());
         item.setQuantity(Integer.parseInt(editQuantity.getText().toString().trim()));
         item.setType(type);
+        item.setStatus(statusTxt.getText().toString().trim());
 
         inventoryFacade.deleteItem(item, new OnSuccessListener<Void>() {
             @Override
@@ -159,5 +168,10 @@ public class InventoryDetailActivity extends AppCompatActivity {
                 Toast.makeText(InventoryDetailActivity.this, "Delete failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private void orderItem(String itemId){
+       OrderDialog dialog = new OrderDialog(this, itemId, type);
+       dialog.show();
     }
 }

@@ -8,6 +8,7 @@ public class Item {
     private double price;
     private int quantity;
     private String type;
+    private String status;
 
     public String getType() {
         return type;
@@ -64,4 +65,10 @@ public class Item {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) { this.status = status; }
 }
