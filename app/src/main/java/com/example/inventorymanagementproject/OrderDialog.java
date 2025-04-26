@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.inventorymanagementproject.Inventory.InventoryListActivity;
+import com.example.inventorymanagementproject.State.ItemState;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -26,7 +27,7 @@ public class OrderDialog {
         this.dialog = new Dialog(activity, R.style.DialogStyle);
         this.dialog.setContentView(R.layout.order_dialog);
         Objects.requireNonNull(this.dialog.getWindow()).setLayout(1000, 1100);
-        dialog.setCancelable(true);
+        this.dialog.setCancelable(true);
 
         buildDialog(itemID, type);
     }
@@ -92,11 +93,19 @@ public class OrderDialog {
                         Toast.makeText(activity, "Insufficient quantity in stock!", Toast.LENGTH_SHORT).show();
                         return;
                     }
+
+                    if (quantityInput.equals("0")) {
+                        Toast.makeText(activity, "Order should not be 0!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
                     int quantityOrder = Integer.parseInt(quantityInput);
 
                     if (quantityOrder <= quantity) {
                         int newQuantity = quantity - quantityOrder;
+                        ItemState newState = ItemState.setState(newQuantity);
                         itemDoc.getReference().update("quantity", newQuantity);
+                        itemDoc.getReference().update("status", newState.getStatus());
                         placeOrder(name, quantityOrder);
                     }
                     else{
@@ -115,6 +124,6 @@ public class OrderDialog {
     }
 
     public void show() {
-        dialog.show();
+        this.dialog.show();
     }
 }

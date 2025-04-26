@@ -18,6 +18,7 @@ import com.example.inventorymanagementproject.Facade.InventoryFacade;
 import com.example.inventorymanagementproject.FirebaseManager;
 import com.example.inventorymanagementproject.OrderDialog;
 import com.example.inventorymanagementproject.R;
+import com.example.inventorymanagementproject.State.ItemState;
 import com.example.inventorymanagementproject.TemplateMethod.AdminAuthorization;
 import com.example.inventorymanagementproject.TemplateMethod.ClientAuthorization;
 import com.example.inventorymanagementproject.TemplateMethod.RoleAuthorization;
@@ -112,14 +113,17 @@ public class InventoryDetailActivity extends AppCompatActivity {
 
     private void updateItem() {
         Item item = new Item();
+        int quantity = Integer.parseInt(editQuantity.getText().toString().trim());
         item.setId(itemId);
         item.setName(editName.getText().toString().trim());
         item.setBrand(editBrand.getText().toString().trim());
         item.setPrice(Double.parseDouble(editPrice.getText().toString().trim()));
         item.setDesc(editDesc.getText().toString().trim());
-        item.setQuantity(Integer.parseInt(editQuantity.getText().toString().trim()));
+        item.setQuantity(quantity);
         item.setType(type);
-        item.setStatus(statusTxt.getText().toString().trim());
+        ItemState newState = ItemState.setState(quantity);
+        item.setStatus(newState.getStatus());
+
 
         inventoryFacade.updateItem(item, new OnSuccessListener<Void>() {
             @Override

@@ -1,6 +1,8 @@
 package com.example.inventorymanagementproject.UserList;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -54,6 +56,10 @@ public class UserListDetail extends AppCompatActivity {
         userId = getIntent().getStringExtra("userId");
         role = getIntent().getStringExtra("role");
 
+        SharedPreferences prefs = getSharedPreferences("roles", Context.MODE_PRIVATE);
+        String adminUsername = prefs.getString("username", null);
+        String adminPass = prefs.getString("password", null);
+
         btnBack.setOnClickListener(v -> back());
         btnDelete.setOnClickListener(v -> deleteUser());
 
@@ -92,6 +98,14 @@ public class UserListDetail extends AppCompatActivity {
         user.setRole(role);
         user.setEmail(editEmail.getText().toString().trim());
         user.setUsername(editUserName.getText().toString().trim());
+
+        SharedPreferences prefs = getSharedPreferences("roles", Context.MODE_PRIVATE);
+        String adminUsername = prefs.getString("username", null);
+
+        if(user.getUsername().equals(adminUsername)) {
+            Toast.makeText(UserListDetail.this, "Cannot delete admin account!", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         userListFacade.deleteUser(user, new OnSuccessListener<Void>() {
             @Override

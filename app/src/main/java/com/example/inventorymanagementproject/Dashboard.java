@@ -98,6 +98,10 @@ public class Dashboard extends AppCompatActivity {
     private void LogOut() {
         mng = FirebaseManager.getInstance();
         mng.getAuth().signOut();
+        SharedPreferences prefs = context.getSharedPreferences("roles", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.clear();
+        editor.apply();
 
         Intent intent = new Intent(Dashboard.this, LogIn.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
