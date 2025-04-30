@@ -104,7 +104,6 @@ public class UserListView extends AppCompatActivity implements UserListAdapter.O
         }
     }
 
-
     private void sortUsersByName(String sortRole, @Nullable String name) {
         com.google.firebase.firestore.Query query = db.collection("Users")
                 .document(sortRole)

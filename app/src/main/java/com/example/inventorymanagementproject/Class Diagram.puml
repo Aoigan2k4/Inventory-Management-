@@ -1,97 +1,173 @@
 @startuml
 'https://plantuml.com/class-diagram}
 
-class FirebaseManager {
-    - static FirebaseManager instance
-    - final FirebaseAuth mAuth
-    - final FirebaseFirestore db
-    - FirebaseManager()
-    + static synchronized getInstance()
-    + getAuth()
-    + getDb()
-}
+'class FirebaseManager {
+'    -static FirebaseManager instance
+'    -final FirebaseAuth mAuth
+'    -final FirebaseFirestore db
+'    -FirebaseManager()
+'
+'    +static synchronized getInstance()
+'    +getAuth(): FirebaseAuth
+'    +getDb(): FirebaseFirestore
+'    +CreateUser(): void
+'    +LogInUser(): void
+'}
 
 class User {
-    - final String id
-    - String username
-    - String email
-    + User(String id, String name, String email)
-    + getEmail()
-    + setEmail(String email)
-    + getId()
-    + getUsername()
-    + setUsername(String username)
+    -String id
+    -String username
+    -String email
+    -String role
 }
 
-abstract class AbstractFactory {
-    + buildClothing() : IBuilder
-    + buildElectronic() : IBuilder
-    + buildFurniture() : IBuilder
+abstract class AbstractItem {
+    +AbstractItem(Type type)
+    +buildClothing() : IBuilder
+    +buildElectronic() : IBuilder
+    +buildFurniture() : IBuilder
 }
 
-class ClothingFactory extends AbstractFactory
-class ElectronicFactory extends AbstractFactory
-class FurnitureFactory extends AbstractFactory
+class ItemFactory extends AbstractItem {
+    +buildClothing() : IBuilder
+    +buildElectronic() : IBuilder
+    +buildFurniture() : IBuilder
+}
 
 enum Type {
-    electronic
-    clothing
-    furniture
+    Electronic
+    Clothing
+    Furniture
 }
 
 interface IBuilder {
-    + SetID(String id)
-    + SetName(String name)
-    + SetBrand(String brand)
-    + SetPrice(String price)
-    + SetDesc(String desc)
-    + SetQuantity(String quantity)
+    +SetID(id: String)
+    +SetName(name: String)
+    +SetBrand(brand: String)
+    +SetPrice(price: String)
+    +SetDesc(desc: String)
+    +SetQuantity(quantity: String)
+    +SetType(type: String)
+    +SetStatus(status: String)
+    +getItem(): Item
 }
 
-class ClothingBuilder implements IBuilder
-class ElectronicBuilder implements IBuilder
-class FurnitureBuilder implements IBuilder
+class ClothingBuilder implements IBuilder {
+    +Item item;
+}
+class ElectronicBuilder implements IBuilder {
+    +Item item;
+}
+class FurnitureBuilder implements IBuilder {
+    +Item item;
+}
 
 class Engineer {
-    - IBuilder iBuilder
-    + Engineer(IBuilder iBuilder)
-    + BuildItem(Items item)
+    -IBuilder iBuilder
+
+    +Engineer(IBuilder iBuilder)
+    +BuildItem(Items item): void
 }
 
 class Items {
-    - String id
-    - String name
-    - String brand
-    - String price
-    - String desc
-    - String quantity
-    + getId()
-    + setId(String id)
-    + getName()
-    + setName(String name)
-    + getBrand()
-    + setBrand(String brand)
-    + getPrice()
-    + setPrice(String price)
-    + getDesc()
-    + setDesc(String desc)
-    + getQuantity()
-    + setQuantity(String quantity)
+    -String id
+    -String name
+    -String brand
+    -double price
+    -String desc
+    -int quantity
+    -String status
 }
 
-FirebaseManager *-- FirebaseAuth
-FirebaseManager *-- FirebaseFirestore
-AbstractFactory <|-- ClothingFactory
-AbstractFactory <|-- ElectronicFactory
-AbstractFactory <|-- FurnitureFactory
-ClothingFactory --> ClothingBuilder
-ElectronicFactory --> ElectronicBuilder
-FurnitureFactory --> FurnitureBuilder
-IBuilder <|.. ClothingBuilder
-IBuilder <|.. ElectronicBuilder
-IBuilder <|.. FurnitureBuilder
+class ValidationHandler {
+    +handle(): void
+}
+
+class FirebaseLogInHandler extends ValidationHandler {
+    #ValidationHandler nextHandler
+
+    +setNext(next: ValidationHandler): void
+    +handle(): void
+}
+
+class ValidationManager {
+    +String username;
+    +String password;
+    +String role;
+
+    +ValidationManager(): void
+}
+
+class InventoryFacade {
+    +InventoryFacade()
+    +updateItem(): void
+    +createItem(): void
+    +deleteItem(): void
+}
+
+class UserListFacade {
+    +UserListFacade(): void
+    +deleteUser(): void
+}
+
+enum ItemState {
+    AVAILABLE("Available"),
+    UNAVAILABLE("Out of Stock");
+
+    +string status
+    +ItemState(String status)
+    +getStatus(): String
+    +setState (quantity: int): ItemState
+}
+
+abstract class RoleAuthorization {
+    +ConfigureAuth(): void
+    +CommonRoles(): void
+    +SpecificRoles() : void
+}
+
+class ClientAuthorization extends RoleAuthorization {
+    ~SpecificRoles(role: String, activity: Activity): void
+}
+
+class AdminAuthorization extends RoleAuthorization {
+    ~SpecificRoles(role: String, activity: Activity): void
+}
+
+class StaffAuthorization extends RoleAuthorization {
+    ~SpecificRoles(role: String, activity: Activity): void
+}
+
+class OrderDialog() {
+    -Dialog dialog
+    -Activity activity
+    -FirebaseManager mng
+    -FirebaseFirestore db
+}
+
+ItemFactory --|> AbstractItem
+FirebaseLogInHandler --|> ValidationHandler
+ClientAuthorization --|> RoleAuthorization
+AdminAuthorization --|> RoleAuthorization
+StaffAuthorization --|> RoleAuthorization
+
+ClothingBuilder ..|> IBuilder
+ElectronicBuilder ..|> IBuilder
+FurnitureBuilder ..|> IBuilder
+
 Engineer --> IBuilder
 Engineer --> Items
+ClothingBuilder --> Items
+ElectronicBuilder --> Items
+FurnitureBuilder --> Items
+AbstractItem --> Type
+ItemFactory --> IBuilder
 
+
+ValidationManager --> FirebaseLogInHandler
+UserListFacade --> User
+InventoryFacade --> Items
+
+Items --> ItemState
 
 @enduml

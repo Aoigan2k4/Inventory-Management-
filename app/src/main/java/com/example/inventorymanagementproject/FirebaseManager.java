@@ -42,7 +42,7 @@ public class FirebaseManager {
         return db;
     }
 
-    void CreateUser(Context context, String role, String password, String username, String email, String adminPassword, String adminUsername, Boolean isAdmin) {
+    public void CreateUser(Context context, String role, String password, String username, String email, String adminPassword, String adminUsername, Boolean isAdmin) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener( task -> {
                     if (task.isSuccessful()) {
