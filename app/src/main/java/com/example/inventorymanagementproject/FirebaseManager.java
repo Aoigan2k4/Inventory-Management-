@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -81,9 +82,19 @@ public class FirebaseManager {
                                         Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show();
                                     });
                         } else {
-                            Toast.makeText(context, "Failed to create user Auth", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Failed to create user!", Toast.LENGTH_SHORT).show();
                         }
                     }
+                    else {
+                        Exception exception = task.getException();
+                        if (exception instanceof FirebaseAuthUserCollisionException) {
+                            Toast.makeText(context, "User already existed!", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            Toast.makeText(context, "Failed to create user!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
                 });
     }
 
