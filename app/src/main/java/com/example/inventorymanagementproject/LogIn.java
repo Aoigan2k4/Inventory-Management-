@@ -56,7 +56,6 @@ public class LogIn extends AppCompatActivity {
         mng = FirebaseManager.getInstance();
 
         if (selectedRoleId == -1) {
-            Toast.makeText(LogIn.this, "Please select a role.", Toast.LENGTH_SHORT).show();
             return;
         }
 

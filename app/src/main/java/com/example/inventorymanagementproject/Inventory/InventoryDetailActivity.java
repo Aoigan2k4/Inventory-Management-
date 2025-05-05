@@ -112,18 +112,30 @@ public class InventoryDetailActivity extends AppCompatActivity {
     }
 
     private void updateItem() {
-        Item item = new Item();
+
+        double price = Double.parseDouble(editPrice.getText().toString().trim());
         int quantity = Integer.parseInt(editQuantity.getText().toString().trim());
+
+        if ( quantity <= 0) {
+            Toast.makeText(InventoryDetailActivity.this, "Quantity must be greater than 0!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (price <= 0)  {
+            Toast.makeText(InventoryDetailActivity.this, "Price must be greater than 0!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Item item = new Item();
         item.setId(itemId);
         item.setName(editName.getText().toString().trim());
         item.setBrand(editBrand.getText().toString().trim());
-        item.setPrice(Double.parseDouble(editPrice.getText().toString().trim()));
+        item.setPrice(price);
         item.setDesc(editDesc.getText().toString().trim());
         item.setQuantity(quantity);
         item.setType(type);
         ItemState newState = ItemState.setState(quantity);
         item.setStatus(newState.getStatus());
-
 
         inventoryFacade.updateItem(item, new OnSuccessListener<Void>() {
             @Override
