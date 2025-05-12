@@ -1,5 +1,5 @@
 # Inventory Management Application
-Authors: Tran Ba Minh Huy, Changru Jia
+Authors: Tran Ba Minh Huy
 
 This project implements a user authentication and item-building system using Firebase Authentication and Firestore, along with a builder pattern for item creation. The system includes user registration, login, and item factory classes.
 
